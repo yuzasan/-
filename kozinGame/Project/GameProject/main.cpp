@@ -92,7 +92,8 @@ void Init(void)
 	*/
 	//画像の読み込みと登録	"リソース名"		"ファイル名",アニメーションデータ,幅,高さ
 	//プレイヤー
-	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png", player_anim_data, 256, 256));
+	//ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png", player_anim_data, 256, 256));
+	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png", player_anim_data, 32, 32));
 	//敵
 	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Enemy.png", enemy_anim_data, 256, 256));
 	//空

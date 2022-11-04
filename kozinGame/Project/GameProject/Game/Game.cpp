@@ -11,8 +11,8 @@ Game::Game() : Base(eType_Scene) {
 	Base::Add(new Map());
 	Base::Add(new Player(CVector2D(1000, 540), false));
 	Base::Add(new Enemy(CVector2D(1300, 540), true));
-	Base::Add(new Enemy(CVector2D(1500, 540), true));
-	Base::Add(new Enemy(CVector2D(1700, 540), true));
+	//Base::Add(new Enemy(CVector2D(1500, 540), true));
+	//Base::Add(new Enemy(CVector2D(1700, 540), true));
 	Base::Add(new Goal(CVector2D(2048, 540)));
 }
 

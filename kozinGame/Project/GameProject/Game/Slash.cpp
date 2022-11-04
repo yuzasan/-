@@ -35,6 +35,6 @@ void Slash::Draw(){
 	m_img.SetFlipH(m_flip);
 	m_img.Draw();
 	//“–‚½‚è”»’è‹éŒ`‚Ì•\Ž¦
-	DrawRect();
+	//DrawRect();
 
 }
