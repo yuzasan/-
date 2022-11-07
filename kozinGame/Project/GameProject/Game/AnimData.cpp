@@ -3,7 +3,6 @@
 
 static TexAnim playerIdle[] = {
 	{ 0,4 },
-	{ 0,4 },
 	{ 1,4 },
 	{ 2,4 },
 	{ 3,4 },
@@ -30,13 +29,11 @@ static TexAnim playerJumpUp[] = {
 	{ 18,4 },
 	{ 19,4 },
 	{ 20,4 },
-
 };
 static TexAnim playerJumpDown[] = {
 	{ 21,4 },
 	{ 22,4 },
 	{ 23,4 },
-
 };
 static TexAnim playerAttack01[] = {
 	{ 24,12 },
@@ -48,6 +45,18 @@ static TexAnim playerAttack01End[] = {
 	{ 28,8 },
 	{ 29,8 },
 };
+
+static TexAnim playerDamage[] = {
+	{ 36,4 },
+	{ 37,4 },
+	{ 38,4 },
+};
+static TexAnim playerDamageEnd[] = {
+	{ 39,4 },
+	{ 40,4 },
+	{ 41,4 },
+};
+
 static TexAnim playerDown[] = {
 	{ 30,10 },
 	{ 31,10 },
@@ -65,6 +74,8 @@ TexAnimData player_anim_data[] = {
 	ANIMDATA(playerJumpDown),
 	ANIMDATA(playerAttack01),
 	ANIMDATA(playerAttack01End),
+	ANIMDATA(playerDamage),
+	ANIMDATA(playerDamageEnd),
 	ANIMDATA(playerDown),
 };
 

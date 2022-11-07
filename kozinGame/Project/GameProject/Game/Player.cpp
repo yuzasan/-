@@ -30,6 +30,7 @@ void Player::StateIdle(){
 		m_pos.x += -move_speed;
 		//反転フラグ
 		m_flip = true;
+		move_flag = false;
 		move_flag2 = true;
 	}
 	//右移動
@@ -45,6 +46,7 @@ void Player::StateIdle(){
 		m_pos.x += move_speed;
 		//反転フラグ
 		m_flip = false;
+		move_flag = false;
 		move_flag2 = true;
 	}
 	//攻撃
@@ -103,16 +105,15 @@ void Player::StateIdle(){
 	}
 	else {
 		m_cnt = 0;
-		//移動中なら
-		if (move_flag&&move_flag2) {
-			//歩くアニメーション
+		if (move_flag2) {
+			//走るアニメーション
 			m_img.ChangeAnimation(eAnimRun);
 		}
-		else if (move_flag&&!move_flag2) {
-			//走るアニメーション
+		else if(move_flag) {
+			//歩くアニメーション
 			m_img.ChangeAnimation(eAnimWalk);
-		}else {
-			//待機アニメーション
+		}
+		else {
 			m_img.ChangeAnimation(eAnimIdle);
 		}
 	}
@@ -167,44 +168,6 @@ void Player::StateAttack(){
 	}
 }
 
-/*
-void Player::StateAttack2(){
-	//攻撃アニメーションへ変更
-	m_img.ChangeAnimation(eAnimAttack02, false);
-	//3番目のパターンなら
-	if (m_img.GetIndex() == 3) {
-		if (m_flip) {
-			Base::Add(new Slash(m_pos + CVector2D(-64, -64), m_flip, eType_Player_Attack, m_attack_no));
-		}
-		else {
-			Base::Add(new Slash(m_pos + CVector2D(64, -64), m_flip, eType_Player_Attack, m_attack_no));
-		}
-	}
-	//アニメーションが終了したら
-	if (m_img.CheckAnimationEnd()) {
-		//通常状態へ移行
-		m_state = eState_Idle;
-	}
-}
-
-void Player::StateAttack3(){
-	//攻撃アニメーションへ変更
-	m_img.ChangeAnimation(eAnimAttack03, false);
-	if (m_img.GetIndex() == 3) {
-		if (m_flip) {
-			Base::Add(new Slash(m_pos + CVector2D(-64, -64), m_flip, eType_Player_Attack, m_attack_no));
-		}
-		else {
-			Base::Add(new Slash(m_pos + CVector2D(64, -64), m_flip, eType_Player_Attack, m_attack_no));
-		}
-	}
-	//アニメーションが終了したら
-	if (m_img.CheckAnimationEnd()) {
-		//通常状態へ移行
-		m_state = eState_Idle;
-	}
-}
-
 void Player::StateDamage(){
 	//ダメージアニメーションへ変更
 	m_img.ChangeAnimation(eAnimDamage, false);
@@ -215,7 +178,7 @@ void Player::StateDamage(){
 	}
 
 }
-*/
+
 
 void Player::StateDown() {
 	//ダウンアニメーションへ変更
@@ -244,7 +207,7 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	//拡大
 	m_rect = CRect(-64, -128, 64, 0);
 	//実サイズ
-	//m_rect = CRect(-32, -128, 32, 0);
+	//m_rect = CRect(-16, -32, 16, 0);
 	//反転フラグ
 	m_flip = flip;
 	//通常状態へ
@@ -272,20 +235,10 @@ void Player::Update() {
 	case eState_Attack:
 		StateAttack();
 		break;
-	/*
-		//攻撃状態2
-	case eState_Attack2:
-		StateAttack2();
-		break;
-		//攻撃状態3
-	case eState_Attack3:
-		StateAttack3();
-		break;
 		//ダメージ状態
 	case eState_Damage:
 		StateDamage();
 		break;
-	*/
 		//ダウン状態
 	case eState_Down:
 		StateDown();
@@ -339,11 +292,9 @@ void Player::Collision(Base* b) {
 				if (m_hp <= 0) {
 					m_state = eState_Down;
 				}
-				/*
 				else {
 					m_state = eState_Damage;
 				}
-				*/
 				Base::Add(new Effect("Effect_Blood", m_pos + CVector2D(0, -128), m_flip));
 			}
 		}
