@@ -45,18 +45,31 @@ static TexAnim playerAttack01End[] = {
 	{ 28,8 },
 	{ 29,8 },
 };
-
+static TexAnim playerAttack02[] = {
+	{ 0,0 },
+};
+static TexAnim playerAttack02End[] = {
+	{ 0,0 },
+};
+static TexAnim playerAttack03[] = {
+	{ 0,0 },
+};
+static TexAnim playerAttack03End[] = {
+	{ 0,0 },
+};
 static TexAnim playerDamage[] = {
-	{ 36,4 },
-	{ 37,4 },
-	{ 38,4 },
+	{ 36,10 },
+	{ 37,10 },
+	{ 38,10 },
 };
 static TexAnim playerDamageEnd[] = {
-	{ 39,4 },
-	{ 40,4 },
-	{ 41,4 },
+	{ 39,10 },
+	{ 40,10 },
+	{ 41,10 },
 };
-
+static TexAnim playerDeath[] = {
+	{ 0,0 },
+};
 static TexAnim playerDown[] = {
 	{ 30,10 },
 	{ 31,10 },
@@ -65,7 +78,39 @@ static TexAnim playerDown[] = {
 	{ 34,10 },
 	{ 35,10 },
 };
-
+static TexAnim playerDownGround[] = {
+	{ 0,0 },
+};
+static TexAnim playerWakeup[] = {
+	{ 0,0 },
+};
+static TexAnim playerGuard[] = {
+	{ 0,0 },
+};
+static TexAnim playerGuardEnd[] = {
+	{ 0,0 },
+};
+static TexAnim playerCrash[] = {
+	{ 0,0 },
+};
+static TexAnim playerCrash01End[] = {
+	{ 0,0 },
+};
+static TexAnim playerExtAttack01[] = {
+	{ 0,0 },
+};
+static TexAnim playerExtAttack01End[] = {
+	{ 0,0 },
+};
+static TexAnim playerExtAttack02[] = {
+	{ 0,0 },
+};
+static TexAnim playerExtAttack02End[] = {
+	{ 0,0 },
+};
+static TexAnim playerStep[] = {
+	{ 0,0 },
+};
 TexAnimData player_anim_data[] = {
 	ANIMDATA(playerIdle),
 	ANIMDATA(playerWalk),
@@ -74,9 +119,25 @@ TexAnimData player_anim_data[] = {
 	ANIMDATA(playerJumpDown),
 	ANIMDATA(playerAttack01),
 	ANIMDATA(playerAttack01End),
+	ANIMDATA(playerAttack02),
+	ANIMDATA(playerAttack02End),
+	ANIMDATA(playerAttack03),
+	ANIMDATA(playerAttack03End),
 	ANIMDATA(playerDamage),
 	ANIMDATA(playerDamageEnd),
+	ANIMDATA(playerDeath),
 	ANIMDATA(playerDown),
+	ANIMDATA(playerDownGround),
+	ANIMDATA(playerWakeup),
+	ANIMDATA(playerGuard),
+	ANIMDATA(playerGuardEnd),
+	ANIMDATA(playerCrash),
+	ANIMDATA(playerCrash01End),
+	ANIMDATA(playerExtAttack01),
+	ANIMDATA(playerExtAttack01End),
+	ANIMDATA(playerExtAttack02),
+	ANIMDATA(playerExtAttack02End),
+	ANIMDATA(playerStep),
 };
 
 static TexAnim enemyIdle[] = {

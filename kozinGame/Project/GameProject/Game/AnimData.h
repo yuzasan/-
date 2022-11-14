@@ -2,7 +2,7 @@
 #include <GLLibrary.h>
 
 //!アニメーションの種類
-enum  {
+enum {
 	eAnimIdle = 0,
 	eAnimWalk,
 	eAnimRun,

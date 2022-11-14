@@ -224,7 +224,8 @@ void Enemy::Collision(Base* b){
 				m_hp -= 50;
 				if (m_hp <= 0) {
 					m_state = eState_Down;
-				}else {
+				}
+				else {
 					m_state = eState_Damage;
 				}
 				Base::Add(new Effect("Effect_Blood", m_pos + CVector2D(0, -128), m_flip));

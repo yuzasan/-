@@ -41,6 +41,7 @@ void Player::StateIdle(){
 		m_flip = false;
 		move_flag = true;
 	}
+	//右移動
 	if (HOLD(CInput::eRight) && HOLD(CInput::eButton5)) {
 		//移動量を設定
 		m_pos.x += move_speed;
@@ -176,9 +177,7 @@ void Player::StateDamage(){
 		//通常状態へ移行
 		m_state = eState_Idle;
 	}
-
 }
-
 
 void Player::StateDown() {
 	//ダウンアニメーションへ変更
