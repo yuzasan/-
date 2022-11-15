@@ -198,14 +198,17 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	m_img.ChangeAnimation(0);
 	//座標設定
 	m_pos_old = m_pos = p;
-	m_img.SetSize(128, 128);
+	m_img.SetSize(64, 64);
+	//m_img.SetSize(128, 128);
 	//中心位置設定
-	m_img.SetCenter(64, 128);
+	m_img.SetCenter(32, 64);
+	//m_img.SetCenter(64, 128);
 	//実サイズ
 	//m_img.SetCenter(16, 32);
 	//当たり判定用矩形設定
 	//拡大
-	m_rect = CRect(-64, -128, 64, 0);
+	m_rect = CRect(-32, -64, 32, 0);
+	//m_rect = CRect(-64, -128, 64, 0);
 	//実サイズ
 	//m_rect = CRect(-16, -32, 16, 0);
 	//反転フラグ
@@ -286,7 +289,7 @@ void Player::Draw() {
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
 	case eType_AreaChange:
-		if (Base::CollisionRect(this, b)) {
+		if (Base::CollisionRect(this, b)&& PUSH(CInput::eButton5)) {//スペースキー
 			//エリアチェンジに触れている
 			m_hit_area_change = true;
 			//エリアチェンジ可能なら
@@ -316,7 +319,7 @@ void Player::Collision(Base* b) {
 			if (m_damage_no != s->GetAttackNo() && Base::CollisionRect(this, s)) {
 				//同じ攻撃の連続ダメージ防止
 				m_damage_no = s->GetAttackNo();
-				m_hp -= 50;
+				//m_hp -= 50;
 				if (m_hp <= 0) {
 					m_state = eState_Down;
 				}

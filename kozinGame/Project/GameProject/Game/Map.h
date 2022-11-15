@@ -16,7 +16,6 @@ private:
 	int m_map_data[MAP_HEIGHT][MAP_WIDTH];
 public:
 	Map(int stage, const CVector2D& nextplayerpos);
-	~Map();
 	void Draw();
 	void Update();
 	//指定座標のチップ番号を取得
