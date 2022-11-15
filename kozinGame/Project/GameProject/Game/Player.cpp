@@ -6,6 +6,7 @@
 #include "../Base/Base.h"
 #include "AnimData.h"
 #include "Map.h"
+#include "AreaChange.h"
 
 void Player::StateIdle(){
 	//移動量
@@ -221,6 +222,9 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	m_hp = 100;
 	//カウント
 	m_cnt = 0;
+
+	m_enable_area_change = true;
+	m_hit_area_change = false;
 }
 
 void Player::Update() {
@@ -255,6 +259,13 @@ void Player::Update() {
 
 	//アニメーション更新
 	m_img.UpdateAnimation();
+
+	//一度エリアチェンジ範囲から離れないと再度エリアチェンジしない
+	//連続エリアチェンジ防止
+	if (!m_enable_area_change && !m_hit_area_change)
+			m_enable_area_change = true;
+	m_hit_area_change = false;
+
 	//スクロール設定
 	m_scroll.x = m_pos.x - 1280 / 2;
 	m_scroll.y = m_pos.y - 600;
@@ -274,6 +285,24 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	case eType_AreaChange:
+		if (Base::CollisionRect(this, b)) {
+			//エリアチェンジに触れている
+			m_hit_area_change = true;
+			//エリアチェンジ可能なら
+			if (m_enable_area_change) {
+				if (AreaChange* a = dynamic_cast<AreaChange*>(b)) {
+					//マップとエリアチェンジオブジェクトを削除
+					KillByType(eType_Field);
+					KillByType(eType_AreaChange);
+					//次のマップを生成
+					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
+					//エリアチェンジ一時不許可
+					m_enable_area_change = false;
+				}
+			}
+		}
+		break;
 	//ゴール判定
 	case eType_Goal:
 		if (Base::CollisionRect(this, b)) {

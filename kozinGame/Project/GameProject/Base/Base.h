@@ -15,6 +15,7 @@ enum {
 	eType_Effect,
 	eType_UI,
 	eType_Scene,
+	eType_AreaChange,
 };
 
 class Base {
@@ -44,6 +45,10 @@ public:
 public:
 	//削除処理
 	void SetKill() { m_kill = true; }
+	// 座標の設定
+	void ResetPos(const CVector2D& pos) {
+		m_pos = m_pos_old = pos;
+	}
 	//コンストラクタにtypeオブジェクトの種類を入れる
 	Base(int type);
 	//(仮想関数化)デストラクタ
@@ -70,6 +75,10 @@ public:
 	static void Add(Base* b);
 	//全オブジェクトの削除
 	static void KillAll();
+
+	// 指定した種類のオブジェクトを削除
+	static void KillByType(int type);
+
 	//円同士の衝突
 	static bool CollisionCircle(Base* b1, Base* b2);
 	//矩形同士の判定

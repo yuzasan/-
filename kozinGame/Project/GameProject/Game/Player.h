@@ -19,6 +19,12 @@ private:
 	bool m_flip;
 	//着地フラグ
 	bool m_is_ground;
+
+	//エリアチェンジフラグ
+	bool m_enable_area_change;
+	//エリアチェンジオブジェクトに触れているフラグ
+	bool m_hit_area_change;
+
 	//攻撃番号
 	int m_attack_no;
 	//ダメージ番号

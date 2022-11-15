@@ -35,6 +35,12 @@
     <ClCompile Include="Game\Map.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Gamedata.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\AreaChange.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -79,6 +85,12 @@
       <Filter>Title</Filter>
     </ClInclude>
     <ClInclude Include="Game\Map.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gamedata.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\AreaChange.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

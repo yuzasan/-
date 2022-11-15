@@ -109,6 +109,16 @@ void Base::KillAll(){
 	}
 }
 
+void Base::KillByType(int type)
+{
+	//w’è‚Ìí—Ş‚ğ‘S‚Äíœ
+	std::list<Base*> ret;
+	for (auto& b : m_list) {
+		if (b->m_type == type)
+			b->SetKill();
+	}
+}
+
 void Base::CollisionAll(){
 	//“–‚½‚è”»’è‚ÌŒŸØ
 	auto it1 = m_list.begin();
