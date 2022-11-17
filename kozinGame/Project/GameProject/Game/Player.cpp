@@ -7,6 +7,7 @@
 #include "AnimData.h"
 #include "Map.h"
 #include "AreaChange.h"
+#include "Gimmick.h"
 
 void Player::StateIdle(){
 	//移動量
@@ -207,7 +208,8 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	//m_img.SetCenter(16, 32);
 	//当たり判定用矩形設定
 	//拡大
-	m_rect = CRect(-32, -64, 32, 0);
+	m_rect = CRect(-30, -60, 30, 0);
+	//m_rect = CRect(-32, -64, 32, 0);//大事
 	//m_rect = CRect(-64, -128, 64, 0);
 	//実サイズ
 	//m_rect = CRect(-16, -32, 16, 0);
@@ -228,6 +230,9 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 
 	m_enable_area_change = true;
 	m_hit_area_change = false;
+
+	m_enable_Warp = true;
+	m_hit_Warp = false;
 }
 
 void Player::Update() {
@@ -269,6 +274,12 @@ void Player::Update() {
 			m_enable_area_change = true;
 	m_hit_area_change = false;
 
+	//一度ワープ範囲から離れないと再度ワープしない
+	//連続ワープ防止
+	if (!m_enable_Warp && !m_hit_Warp)
+		m_enable_Warp = true;
+	m_hit_Warp = false;
+
 	//スクロール設定
 	m_scroll.x = m_pos.x - 1280 / 2;
 	m_scroll.y = m_pos.y - 600;
@@ -282,12 +293,13 @@ void Player::Draw() {
 	//描画
 	m_img.Draw();
 	//当たり判定矩形の表示
-	//DrawRect();
+	DrawRect();
 
 }
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	//エリアチェンジ判定
 	case eType_AreaChange:
 		if (Base::CollisionRect(this, b)&& PUSH(CInput::eButton5)) {//スペースキー
 			//エリアチェンジに触れている
@@ -298,8 +310,24 @@ void Player::Collision(Base* b) {
 					//マップとエリアチェンジオブジェクトを削除
 					KillByType(eType_Field);
 					KillByType(eType_AreaChange);
+					KillByType(eType_Warp);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
+					//エリアチェンジ一時不許可
+					m_enable_area_change = false;
+				}
+			}
+		}
+		break;
+	//ワープ判定
+	case eType_Warp:
+		if (Base::CollisionRect(this, b)) {
+			//ワープに触れている
+			m_hit_Warp = true;
+			//ワープ可能なら
+			if (m_enable_Warp) {
+				if (Warp* a = dynamic_cast<Warp*>(b)) {
+					ResetPos(a->m_nextplayerpos);
 					//エリアチェンジ一時不許可
 					m_enable_area_change = false;
 				}
@@ -347,11 +375,11 @@ void Player::Collision(Base* b) {
 		break;
 		*/
 		if (Map* m = dynamic_cast<Map*>(b)) {
-			int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y));
+			int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect);
 			if (t != 0) {
 				m_pos.x = m_pos_old.x;
 			}
-			t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y));
+			t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect);
 			if (t != 0) {
 				m_pos.y = m_pos_old.y;
 				m_vec.y = 0;

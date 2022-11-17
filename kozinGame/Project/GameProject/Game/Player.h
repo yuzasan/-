@@ -25,6 +25,11 @@ private:
 	//エリアチェンジオブジェクトに触れているフラグ
 	bool m_hit_area_change;
 
+	//エリアワープフラグ
+	bool m_enable_Warp;
+	//エリアワープオブジェクトに触れているフラグ
+	bool m_hit_Warp;
+
 	//攻撃番号
 	int m_attack_no;
 	//ダメージ番号
