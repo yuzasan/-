@@ -5,6 +5,7 @@
 #include "Goal.h"
 #include "../Title/Title.h"
 #include "Map.h"
+#include "Gamedata.h"
 
 Game::Game() : Base(eType_Scene) {
 	Base::Add(new Map(1,CVector2D(100,100)));
@@ -15,13 +16,14 @@ Game::Game() : Base(eType_Scene) {
 Game::~Game(){
 	//全てのオブジェクトを破棄
 	Base::KillAll();
+	GameData::a = 0;
 	//タイトルシーンへ
 	Base::Add(new Title());
 }
 
 void Game::Update(){
 	//ゴールが無ければゲームシーン終了
-	if (!Base::FindObject(eType_Goal)) {
+	if (GameData::a==1) {
 		SetKill();
 	}
 	

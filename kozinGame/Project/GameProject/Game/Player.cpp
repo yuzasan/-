@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "AreaChange.h"
 #include "Gimmick.h"
+#include "Gamedata.h"
 
 void Player::StateIdle(){
 	//移動量
@@ -311,6 +312,8 @@ void Player::Collision(Base* b) {
 					KillByType(eType_Field);
 					KillByType(eType_AreaChange);
 					KillByType(eType_Warp);
+					KillByType(eType_Enemy);
+					KillByType(eType_Goal);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可
@@ -338,6 +341,7 @@ void Player::Collision(Base* b) {
 	case eType_Goal:
 		if (Base::CollisionRect(this, b)) {
 			b->SetKill();
+			GameData::a = 1;
 		}
 		break;
 	//攻撃オブジェクトとの判定

@@ -78,7 +78,7 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field) {
 		Base::Add(new Enemy(CVector2D(32 * 30, 32 * 16), true));
 	
 		//ゴールの生成
-		Base::Add(new Goal(CVector2D(32 * 30, 32 * 4)));
+		//Base::Add(new Goal(CVector2D(32 * 30, 32 * 4)));
 
 		//エリアチェンジの生成
 		Base::Add(new AreaChange(GameData::stage = 2,

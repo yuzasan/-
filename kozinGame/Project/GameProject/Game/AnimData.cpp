@@ -157,6 +157,9 @@ static TexAnim enemyIdle[] = {
 	{ 13,2 },
 	{ 14,2 },
 };
+static TexAnim enemyWalk[] = {
+	{ 0,0 },
+};
 static TexAnim enemyRun[] = {
 	{ 16,2 },
 	{ 17,2 },
@@ -280,6 +283,7 @@ static TexAnim enemyExtAttack01End[] = {
 };
 TexAnimData enemy_anim_data[] = {
 	ANIMDATA(enemyIdle),
+	ANIMDATA(enemyWalk),
 	ANIMDATA(enemyRun),
 	ANIMDATA(enemyJumpUp),
 	ANIMDATA(enemyJumpDown),

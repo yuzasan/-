@@ -1,6 +1,6 @@
 #pragma once
 #include "../Base/Base.h"
-#include "Gamedata.h"
+//#include "Gamedata.h"
 //マップの横のチップ数
 #define MAP_WIDTH	4000
 //マップの縦のチップ数
