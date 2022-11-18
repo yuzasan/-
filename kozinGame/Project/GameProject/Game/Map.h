@@ -31,4 +31,5 @@ public:
 	float GetGroundY() {
 		return m_ground_y;
 	}
+	int i = 0;
 };

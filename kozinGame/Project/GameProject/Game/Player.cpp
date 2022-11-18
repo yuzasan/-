@@ -10,7 +10,7 @@
 #include "Gimmick.h"
 #include "Gamedata.h"
 
-void Player::StateIdle(){
+void Player::StateIdle() {
 	//移動量
 	const float move_speed = 6;
 	//ジャンプ力
@@ -74,15 +74,23 @@ void Player::StateIdle(){
 	}
 	*/
 
-	//ジャンプ
-	if (m_is_ground && PUSH(CInput::eButton2)) {
-		m_vec.y = -jump_pow;
-		m_is_ground = false;
-		m_cnt++;
+	if (!m_is_ground2) {
+		//ジャンプ
+		if (m_is_ground && PUSH(CInput::eButton2)) {
+			m_vec.y = jump_pow * 0.8;
+			m_is_ground2 = false;
+		}
+	} else {
+		//ジャンプ
+		if (m_is_ground && PUSH(CInput::eButton2)) {
+			m_vec.y = -jump_pow;
+			m_is_ground = false;
+			m_cnt++;
+		}
 	}
 
 	//ジャンプ中なら
-	if (!m_is_ground) {
+	if (!m_is_ground&&m_is_ground2) {
 		//ジャンプ回数制限
 		if (m_cnt<3) {
 			//二段ジャンプ
@@ -234,6 +242,9 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 
 	m_enable_Warp = true;
 	m_hit_Warp = false;
+
+	//着地フラグ上
+	m_is_ground2 = true;
 }
 
 void Player::Update() {
@@ -300,6 +311,17 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	//重力判定
+	case eType_Gravity2:
+		if (Base::CollisionRect(this, b)) {
+			//重力エリアに触れていたら
+			if (m_is_ground2)
+				m_is_ground2 = false;
+			//重力による落下
+			m_vec.y -= GRAVITY * 2;
+			m_pos += m_vec;
+		}
+		break;
 	//エリアチェンジ判定
 	case eType_AreaChange:
 		if (Base::CollisionRect(this, b)&& PUSH(CInput::eButton5)) {//スペースキー
@@ -314,6 +336,7 @@ void Player::Collision(Base* b) {
 					KillByType(eType_Warp);
 					KillByType(eType_Enemy);
 					KillByType(eType_Goal);
+					KillByType(eType_Gravity2);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可
@@ -388,6 +411,7 @@ void Player::Collision(Base* b) {
 				m_pos.y = m_pos_old.y;
 				m_vec.y = 0;
 				m_is_ground = true;
+				m_is_ground2 = true;
 			}
 		}
 		break;

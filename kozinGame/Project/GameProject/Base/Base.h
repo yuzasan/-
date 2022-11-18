@@ -5,6 +5,7 @@
 
 
 enum {
+	eType_Gravity2,//•\¦‚Ì‡”Ô‚ª‘å–
 	eType_Field,
 	eType_Warp,
 	eType_Player,

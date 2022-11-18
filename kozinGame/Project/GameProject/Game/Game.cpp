@@ -10,7 +10,8 @@
 Game::Game() : Base(eType_Scene) {
 	Base::Add(new Map(1,CVector2D(100,100)));
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
-	Base::Add(new Player(CVector2D(100, 32 * 8), false));
+	Base::Add(new Player(CVector2D(32 * 65, 1340), false));
+	//Base::Add(new Player(CVector2D(100, 32 * 8), false));
 }
 
 Game::~Game(){

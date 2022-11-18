@@ -20,6 +20,9 @@ private:
 	//着地フラグ
 	bool m_is_ground;
 
+	//着地フラグ上
+	bool m_is_ground2;
+
 	//エリアチェンジフラグ
 	bool m_enable_area_change;
 	//エリアチェンジオブジェクトに触れているフラグ
