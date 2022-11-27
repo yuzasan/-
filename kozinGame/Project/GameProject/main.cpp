@@ -94,6 +94,8 @@ void Init(void)
 	//ÉvÉåÉCÉÑÅ[
 	//ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png", player_anim_data, 256, 256));
 	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png", player_anim_data, 32, 32));
+
+	ADD_RESOURCE("Change", CImage::CreateImage("Image/Change.png"));
 	//ìG
 	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Enemy.png", enemy_anim_data, 256, 256));
 	//ãÛ

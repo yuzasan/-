@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Change.h"
 #include "Field.h"
 #include "Slash.h"
 #include "Enemy.h"
@@ -58,6 +59,11 @@ void Player::StateIdle() {
 		//攻撃状態へ移行
 		m_state = eState_Attack;
 		m_attack_no++;
+	}
+	//変身
+	if (PUSH(CInput::eButton3)) {
+		//変身状態へ移行
+		m_state = eState_Change;
 	}
 	/*
 	//攻撃2
@@ -201,6 +207,11 @@ void Player::StateDown() {
 	}
 }
 
+void Player::StateChange() {
+	Base::Add(new Change(m_pos,false));
+	SetKill();
+}
+
 Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	//画像複製
 	m_img = COPY_RESOURCE("Player", CImage);
@@ -217,7 +228,7 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	//m_img.SetCenter(16, 32);
 	//当たり判定用矩形設定
 	//拡大
-	m_rect = CRect(-30, -60, 30, 0);
+	m_rect = CRect(-29, -60, 29, 0);
 	//m_rect = CRect(-32, -64, 32, 0);//大事
 	//m_rect = CRect(-64, -128, 64, 0);
 	//実サイズ
@@ -265,6 +276,9 @@ void Player::Update() {
 		//ダウン状態
 	case eState_Down:
 		StateDown();
+		break;
+	case eState_Change:
+		StateChange();
 		break;
 	}
 	//落ちていたら落下中状態へ移行

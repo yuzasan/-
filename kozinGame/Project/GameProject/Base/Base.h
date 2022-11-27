@@ -9,6 +9,7 @@ enum {
 	eType_Field,
 	eType_Warp,
 	eType_Player,
+	eType_Change,
 	eType_Enemy,
 	eType_Bullet,
 	eType_Goal,
