@@ -24,6 +24,9 @@ private:
 	//着地フラグ上
 	bool m_is_ground2;
 
+	//アイテムフラグ
+	bool m_item;
+
 	//エリアチェンジフラグ
 	bool m_enable_area_change;
 	//エリアチェンジオブジェクトに触れているフラグ

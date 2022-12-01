@@ -47,6 +47,12 @@
     <ClCompile Include="Game\Change.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game\UI.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Item.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -103,6 +109,12 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Change.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Item.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

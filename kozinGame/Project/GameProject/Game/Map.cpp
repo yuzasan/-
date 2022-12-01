@@ -5,6 +5,8 @@
 #include "AreaChange.h"
 #include "Gamedata.h"
 #include "Gimmick.h"
+#include "UI.h"
+#include "Item.h"
 static int stage1data[MAP_HEIGHT][MAP_WIDTH] = {
     //1,2,3,4,5,6,7,8,910111213141516171819202122232425262728293031323334353637383940
 	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//1
@@ -56,7 +58,7 @@ static int stage2data[MAP_HEIGHT][MAP_WIDTH] = {
    { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//22
 };
 
-Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field) {
+Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_text("C:\\Windows\\Fonts\\msgothic.ttc", 32) {
 	m_ground_x = 500;
 	m_ground_y = 500;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
@@ -94,6 +96,9 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field) {
 			CRect(32 * 50, 32 * 10, 64, 128),
 			CVector2D(32 * 39, 32 * 19)));
 		
+		//アイテム
+		Base::Add(new Item(CVector2D(32 * 50, 32 * 8)));
+
 		//重力エリアの生成
 		/*
 		Base::Add(new Gravity2(GameData::stage = 1,
@@ -114,6 +119,9 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field) {
 		Base::Add(new AreaChange(GameData::stage = 1,
 			CRect(32 * 20, 32 * 8, 64, 128),
 			CVector2D(100, 200)));
+
+		//アイテム
+		Base::Add(new Item(CVector2D(32 * 50, 32 * 8)));
 
 		break;
 	}
@@ -153,6 +161,7 @@ void Map::Draw(){
 			m_img.Draw();
 		}
 	}
+	m_title_text.Draw(350, 100, 255, 255, 255, "×%d",GameData::Item);
 }
 
 void Map::Update(){
@@ -171,6 +180,9 @@ void Map::Update(){
 		Base::Add(new Gravity2(GameData::stage = 1,
 			CRect(32 * 66, 1024, 32 * 12, 32 * 10)));//32*2で1マップチップ
 			//CRect(32 * 66, 32 * 32, 512, 512)));
+	}
+	if (!Base::FindObject(eType_UI)) {
+		Base::Add(new UI());
 	}
 };
 

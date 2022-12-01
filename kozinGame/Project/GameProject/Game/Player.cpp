@@ -10,6 +10,8 @@
 #include "AreaChange.h"
 #include "Gimmick.h"
 #include "Gamedata.h"
+#include "UI.h"
+#include "Item.h"
 
 void Player::StateIdle() {
 	//移動量
@@ -61,7 +63,7 @@ void Player::StateIdle() {
 		m_attack_no++;
 	}
 	//変身
-	if (PUSH(CInput::eButton3)) {
+	if (PUSH(CInput::eButton3)) {//if (GameData::life <= 2||PUSH(CInput::eButton3))
 		//変身状態へ移行
 		m_state = eState_Change;
 	}
@@ -256,6 +258,8 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 
 	//着地フラグ上
 	m_is_ground2 = true;
+
+	m_item = true;
 }
 
 void Player::Update() {
@@ -325,6 +329,17 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	//アイテム判定
+	case eType_Item:
+		if (Base::CollisionRect(this, b)) {
+			//アイテムに触れていたら
+			if (m_item) {
+				GameData::Item = GameData::Item + 1;
+				KillByType(eType_Item);
+				m_item = false;
+			}
+		}
+		break;
 	//重力判定
 	case eType_Gravity2:
 		if (Base::CollisionRect(this, b)) {
@@ -351,6 +366,8 @@ void Player::Collision(Base* b) {
 					KillByType(eType_Enemy);
 					KillByType(eType_Goal);
 					KillByType(eType_Gravity2);
+					KillByType(eType_UI);
+					KillByType(eType_Item);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可
@@ -389,7 +406,9 @@ void Player::Collision(Base* b) {
 				//同じ攻撃の連続ダメージ防止
 				m_damage_no = s->GetAttackNo();
 				//m_hp -= 50;
-				if (m_hp <= 0) {
+				GameData::life = GameData::life - 1;
+				KillByType(eType_UI);
+				if (GameData::life <= 0) {
 					m_state = eState_Down;
 				}
 				else {

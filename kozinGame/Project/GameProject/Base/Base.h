@@ -11,6 +11,7 @@ enum {
 	eType_Player,
 	eType_Change,
 	eType_Enemy,
+	eType_Item,
 	eType_Bullet,
 	eType_Goal,
 	eType_Player_Attack,

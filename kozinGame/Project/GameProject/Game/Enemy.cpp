@@ -17,10 +17,9 @@ void Enemy::StateIdle() {
 	const float jump_pow = 12;
 	//プレイヤーを探索
 	Base* player = Base::FindObject(eType_Player);
-
 	if (player) {
 		//左移動
-		if (player->m_pos.x < m_pos.x - 64) {
+		if (player->m_pos.x < m_pos.x - 64){
 			//移動量を設定
 			m_pos.x += -move_speed;
 			//反転フラグ
@@ -35,6 +34,31 @@ void Enemy::StateIdle() {
 			m_flip = false;
 			move_flag = true;
 		}else {
+			//攻撃状態へ移行
+			m_state = eState_Attack;
+			m_attack_no++;
+		}
+	}
+	Base* change = Base::FindObject(eType_Change);
+	if (change) {
+		//左移動
+		if (change->m_pos.x < m_pos.x - 64) {
+			//移動量を設定
+			m_pos.x += -move_speed;
+			//反転フラグ
+			m_flip = true;
+			move_flag = true;
+		}
+		else
+		//右移動
+		if (change->m_pos.x > m_pos.x + 64) {
+			//移動量を設定
+			m_pos.x += move_speed;
+			//反転フラグ
+			m_flip = false;
+			move_flag = true;
+		}
+		else {
 			//攻撃状態へ移行
 			m_state = eState_Attack;
 			m_attack_no++;
