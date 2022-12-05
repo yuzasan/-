@@ -35,6 +35,7 @@ private:
 	void StateDown();
 
 public:
+	int r = 0;
 	Enemy(const CVector2D& p, bool flip);
 	void Update();
 	void Draw();

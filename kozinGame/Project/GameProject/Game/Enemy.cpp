@@ -7,6 +7,7 @@
 #include "Goal.h"
 #include "AnimData.h"
 #include "Map.h"
+#include "Item.h"
 
 void Enemy::StateIdle() {
 	//移動量
@@ -155,6 +156,11 @@ void Enemy::StateDown() {
 		Base::Add(new Effect("Effect_Smoke", m_pos + CVector2D(0, 0), m_flip));
 		//通常状態へ移行
 		m_kill = true;
+		printf("r:%d\n", r);
+		if (r%2 == 0) {
+			Base::Add(new Item(CVector2D(m_pos.x, m_pos.y - 32)));
+			r = 0;
+		}
 	}
 }
 
@@ -216,6 +222,8 @@ void Enemy::Update(){
 	//重力による落下
 	m_vec.y += GRAVITY;
 	m_pos += m_vec;
+
+	r++;
 
 	//待機アニメーション
 	//m_img.ChangeAnimation(eAnimIdle);

@@ -259,7 +259,7 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	//着地フラグ上
 	m_is_ground2 = true;
 
-	m_item = true;
+	//m_item = true;
 }
 
 void Player::Update() {
@@ -329,17 +329,19 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	/*
 	//アイテム判定
 	case eType_Item:
 		if (Base::CollisionRect(this, b)) {
 			//アイテムに触れていたら
 			if (m_item) {
 				GameData::Item = GameData::Item + 1;
-				KillByType(eType_Item);
+				//KillByType(eType_Item);
 				m_item = false;
 			}
 		}
 		break;
+	*/
 	//重力判定
 	case eType_Gravity2:
 		if (Base::CollisionRect(this, b)) {

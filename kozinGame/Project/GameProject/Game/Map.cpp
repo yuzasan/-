@@ -79,7 +79,7 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 		memcpy(m_map_data, stage1data, sizeof(stage1data));
 		//敵の生成
 		Base::Add(new Enemy(CVector2D(32 * 30, 32 * 16), true));
-	
+		
 		//ゴールの生成
 		//Base::Add(new Goal(CVector2D(32 * 30, 32 * 4)));
 
@@ -97,7 +97,9 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 			CVector2D(32 * 39, 32 * 19)));
 		
 		//アイテム
-		Base::Add(new Item(CVector2D(32 * 50, 32 * 8)));
+		Base::Add(new Item(CVector2D(32 * 63, 1340)));
+		Base::Add(new Item(CVector2D(32 * 61, 1340)));
+		Base::Add(new Item(CVector2D(32 * 59, 1340)));
 
 		//重力エリアの生成
 		/*
@@ -121,7 +123,7 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 			CVector2D(100, 200)));
 
 		//アイテム
-		Base::Add(new Item(CVector2D(32 * 50, 32 * 8)));
+		Base::Add(new Item(CVector2D(32 * 63, 1340)));
 
 		break;
 	}
@@ -161,6 +163,7 @@ void Map::Draw(){
 			m_img.Draw();
 		}
 	}
+	if(Base::FindObject(eType_Player)|| Base::FindObject(eType_Change))
 	m_title_text.Draw(350, 100, 255, 255, 255, "×%d",GameData::Item);
 }
 
