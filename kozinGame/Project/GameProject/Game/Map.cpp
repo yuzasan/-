@@ -134,7 +134,7 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 	}
 }
 
-void Map::Draw(){
+void Map::Draw() {
 	//‰¡
 	int x1 = m_scroll.x / MAP_TIP_SIZE;
 	if (x1 < 0) x1 = 0;
@@ -163,8 +163,14 @@ void Map::Draw(){
 			m_img.Draw();
 		}
 	}
-	if(Base::FindObject(eType_Player)|| Base::FindObject(eType_Change))
-	m_title_text.Draw(350, 100, 255, 255, 255, "~%d",GameData::Item);
+	if (Base::FindObject(eType_Player) || Base::FindObject(eType_Change)) {
+		if (GameData::Item == 5) {
+			m_title_text.Draw(350, 100, 255, 255, 255, "~MAX");
+		}
+		else {
+			m_title_text.Draw(350, 100, 255, 255, 255, "~%d", GameData::Item);
+		}
+	}
 }
 
 void Map::Update(){
