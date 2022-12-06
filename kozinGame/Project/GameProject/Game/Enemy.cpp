@@ -158,7 +158,11 @@ void Enemy::StateDown() {
 		m_kill = true;
 		printf("r:%d\n", r);
 		if (r%2 == 0) {
-			Base::Add(new Item(CVector2D(m_pos.x, m_pos.y - 32)));
+			Base::Add(new ItemC(CVector2D(m_pos.x, m_pos.y - 32)));
+			r = 0;
+		}
+		else {
+			Base::Add(new ItemK(CVector2D(m_pos.x, m_pos.y - 32)));
 			r = 0;
 		}
 	}

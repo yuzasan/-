@@ -57,7 +57,8 @@ void Player::StateIdle() {
 		move_flag2 = true;
 	}
 	//UŒ‚
-	if (PUSH(CInput::eButton1)) {
+	if (GameData::ItemK >= 1 && PUSH(CInput::eButton1)) {
+		GameData::ItemK = GameData::ItemK - 1;
 		//UŒ‚ó‘Ô‚ÖˆÚs
 		m_state = eState_Attack;
 		m_attack_no++;

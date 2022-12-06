@@ -97,9 +97,9 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 			CVector2D(32 * 39, 32 * 19)));
 		
 		//ÉAÉCÉeÉÄ
-		Base::Add(new Item(CVector2D(32 * 63, 1340)));
-		Base::Add(new Item(CVector2D(32 * 61, 1340)));
-		Base::Add(new Item(CVector2D(32 * 59, 1340)));
+		Base::Add(new ItemC(CVector2D(32 * 63, 1340-32)));
+		//Base::Add(new ItemC(CVector2D(32 * 61, 1340)));
+		Base::Add(new ItemK(CVector2D(32 * 59, 1340-32)));
 
 		//èdóÕÉGÉäÉAÇÃê∂ê¨
 		/*
@@ -123,7 +123,7 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 			CVector2D(100, 200)));
 
 		//ÉAÉCÉeÉÄ
-		Base::Add(new Item(CVector2D(32 * 63, 1340)));
+		Base::Add(new ItemC(CVector2D(32 * 63, 1340)));
 
 		break;
 	}
@@ -164,11 +164,15 @@ void Map::Draw() {
 		}
 	}
 	if (Base::FindObject(eType_Player) || Base::FindObject(eType_Change)) {
-		if (GameData::Item == 5) {
+		if (GameData::ItemC == 5) {
 			m_title_text.Draw(350, 100, 255, 255, 255, "Å~MAX");
 		}
+		else if (GameData::ItemK == 10) {
+			m_title_text.Draw(450, 100, 255, 255, 255, "Å~MAX");
+		}
 		else {
-			m_title_text.Draw(350, 100, 255, 255, 255, "Å~%d", GameData::Item);
+			m_title_text.Draw(350, 100, 255, 255, 255, "Å~%d", GameData::ItemC);
+			m_title_text.Draw(450, 100, 255, 255, 255, "Å~%d", GameData::ItemK);
 		}
 	}
 }

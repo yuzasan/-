@@ -24,6 +24,6 @@ void Title::Update(){
 void Title::Draw(){
 	m_img.Draw();
 	//•¶Žš•\Ž¦
-	m_title_text.Draw(64, 255, 0, 0, 0, "Title(‰¼)");
-	m_title_text.Draw(64, 512, 0, 0, 0, "Push Z");
+	m_title_text.Draw(64, 255, 255, 255, 255, "Title(‰¼)");
+	m_title_text.Draw(64, 512, 255, 255, 255, "Push Z");
 }

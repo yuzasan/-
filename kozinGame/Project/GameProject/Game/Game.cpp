@@ -20,7 +20,8 @@ Game::~Game(){
 	Base::KillAll();
 	GameData::a = 0;
 	GameData::life = 4;
-	GameData::Item = 3;
+	GameData::ItemC = 3;
+	GameData::ItemK = 10;
 	//タイトルシーンへ
 	Base::Add(new Title());
 }

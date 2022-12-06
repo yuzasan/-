@@ -117,8 +117,8 @@ void Init(void)
 	//タイトル
 	ADD_RESOURCE("Title", CImage::CreateImage("Image/Title.png"));
 	//アイテム
-	ADD_RESOURCE("Item", CImage::CreateImage("Image/Item.png"));
-
+	ADD_RESOURCE("ItemC", CImage::CreateImage("Image/ItemC.png"));
+	ADD_RESOURCE("ItemK", CImage::CreateImage("Image/ItemK.png"));
 
 	/*
 	//プレイヤーの生成
