@@ -38,6 +38,10 @@ void ItemC::Collision(Base* b) {
 			s = 1;
 		}
 		break;
+	case eType_Change:
+		if (Base::CollisionRect(this, b)) {
+			s = 1;
+		}
 	}
 }
 
@@ -74,6 +78,11 @@ void ItemK::Collision(Base* b) {
 	switch (b->m_type) {
 		//ƒAƒCƒeƒ€”»’è
 	case eType_Player:
+		if (Base::CollisionRect(this, b)) {
+			s = 1;
+		}
+		break;
+	case eType_Change:
 		if (Base::CollisionRect(this, b)) {
 			s = 1;
 		}

@@ -29,7 +29,7 @@ static int stage1data[MAP_HEIGHT][MAP_WIDTH] = {
 	{ 1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1},//18
 	{ 1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1},//19
 	{ 1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},//20
-	{ 1,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},//21
+	{ 1,0,0,0,0,1,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},//21
 	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//22
 };
 static int stage2data[MAP_HEIGHT][MAP_WIDTH] = {
@@ -58,7 +58,7 @@ static int stage2data[MAP_HEIGHT][MAP_WIDTH] = {
    { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//22
 };
 
-Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_text("C:\\Windows\\Fonts\\msgothic.ttc", 32) {
+Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_text("C:\\Windows\\Fonts\\msgothic.ttc", 32), m_key_text("C:\\Windows\\Fonts\\msgothic.ttc", 128) {
 	m_ground_x = 500;
 	m_ground_y = 500;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
@@ -78,7 +78,8 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 	case 1:
 		memcpy(m_map_data, stage1data, sizeof(stage1data));
 		//敵の生成
-		Base::Add(new Enemy(CVector2D(32 * 30, 32 * 16), true));
+		Base::Add(new Enemy(CVector2D(32 * 4, 1340 - 32), true));
+		//Base::Add(new Enemy(CVector2D(32 * 30, 32 * 16), true));
 		
 		//ゴールの生成
 		//Base::Add(new Goal(CVector2D(32 * 30, 32 * 4)));
@@ -175,7 +176,37 @@ void Map::Draw() {
 			m_title_text.Draw(450, 100, 255, 255, 255, "×%d", GameData::ItemK);
 		}
 	}
-	m_title_text.Draw(700, 100, 255, 255, 255, "残り時間:%02d", GameData::time);
+	m_title_text.Draw(700, 100, 255, 255, 255, "残り時間:%02d秒", GameData::time);
+
+	//説明用
+	if (HOLD(CInput::eRight) && HOLD(CInput::eButton2) && HOLD(CInput::eButton5)) {
+		m_key_text.Draw(200, 400, 255, 255, 255, "→キー&&Xキー&&spaceキー");
+	}else if (HOLD(CInput::eLeft) && HOLD(CInput::eButton2) && HOLD(CInput::eButton5)) {
+		m_key_text.Draw(200, 400, 255, 255, 255, "←キー&&Xキー&&spaceキー");
+	}else if (HOLD(CInput::eRight) && HOLD(CInput::eButton5)) {
+		m_key_text.Draw(400, 400, 255, 255, 255, "→キー&&spaceキー");
+	}else if(HOLD(CInput::eLeft) && HOLD(CInput::eButton5)) {
+		m_key_text.Draw(400, 400, 255, 255, 255, "←キー&&spaceキー");
+	}else if(HOLD(CInput::eRight) && HOLD(CInput::eButton2)) {
+		m_key_text.Draw(400, 400, 255, 255, 255, "→キー&&Xキー");
+	}else if (HOLD(CInput::eLeft) && HOLD(CInput::eButton2)) {
+		m_key_text.Draw(400, 400, 255, 255, 255, "←キー&&Xキー");
+	}else if(HOLD(CInput::eRight)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "→キー");
+	}else if (HOLD(CInput::eLeft)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "←キー");
+	}else if (HOLD(CInput::eButton1)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "Zキー");
+	}else if (HOLD(CInput::eButton2)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "Xキー");
+	}else if (HOLD(CInput::eButton3)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "Cキー");
+	}else if (HOLD(CInput::eButton5)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "spaceキー");
+	}else if (HOLD(CInput::eButton10)) {
+		m_key_text.Draw(800, 400, 255, 255, 255, "enterキー");
+	}
+
 }
 
 void Map::Update(){

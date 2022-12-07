@@ -13,6 +13,7 @@ private:
 	CImage m_img;
 	//文字表示オブジェクト
 	CFont m_title_text;
+	CFont m_key_text;
 	float m_ground_x;
 	float m_ground_y;
 	int m_map_data[MAP_HEIGHT][MAP_WIDTH];
