@@ -175,6 +175,7 @@ void Map::Draw() {
 			m_title_text.Draw(450, 100, 255, 255, 255, "~%d", GameData::ItemK);
 		}
 	}
+	m_title_text.Draw(700, 100, 255, 255, 255, "c‚èŠÔ:%02d", GameData::time);
 }
 
 void Map::Update(){

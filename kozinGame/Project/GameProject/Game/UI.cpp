@@ -8,6 +8,14 @@ UI::UI():Base(eType_UI) {
 	m_rect = CRect(-16, -16, 16, 16);
 }
 
+void UI::Update() {
+	cnt++;
+	if (cnt >= 60) {
+		GameData::time -= 1;
+		cnt = 0;
+	}
+}
+
 void UI::Draw(){
 	int life = GameData::life;
 	for (int i = 0; i < life; i++) {
@@ -16,11 +24,11 @@ void UI::Draw(){
 		m_img.Draw();
 		m_img2.SetSize(32, 32);
 		m_img2.SetCenter(16, 16);
-		m_img2.SetPos(300, 100);
+		m_img2.SetPos(332, 100-16);
 		m_img2.Draw();
 		m_img3.SetSize(32, 32);
 		m_img3.SetCenter(16, 16);
-		m_img3.SetPos(400, 100);
+		m_img3.SetPos(432, 100-16);
 		m_img3.Draw();
 	}
 }

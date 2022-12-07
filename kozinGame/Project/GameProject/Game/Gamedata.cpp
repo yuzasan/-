@@ -6,3 +6,4 @@ int GameData::k = 0;
 int GameData::life = 4;
 int GameData::ItemC = 3;
 int GameData::ItemK = 6;
+int GameData::time = 60;

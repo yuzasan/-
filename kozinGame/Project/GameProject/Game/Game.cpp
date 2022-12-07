@@ -21,7 +21,8 @@ Game::~Game(){
 	GameData::a = 0;
 	GameData::life = 4;
 	GameData::ItemC = 3;
-	GameData::ItemK = 10;
+	GameData::ItemK = 6;
+	GameData::time = 60;
 	//タイトルシーンへ
 	Base::Add(new Title());
 }
@@ -40,6 +41,10 @@ void Game::Update(){
 
 	//体力(Heart)がなくなりボタン1でゲームシーン終了
 	if (GameData::life == 0 && PUSH(CInput::eButton1)) {
+		SetKill();
+	}
+
+	if (GameData::time <= 0) {
 		SetKill();
 	}
 	

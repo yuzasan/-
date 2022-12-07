@@ -8,4 +8,5 @@ public:
 	static int life;
 	static int ItemC;
 	static int ItemK;
+	static int time;
 };
