@@ -28,7 +28,7 @@ void UI::Draw(){
 		m_img2.Draw();
 		m_img3.SetSize(32, 32);
 		m_img3.SetCenter(16, 16);
-		m_img3.SetPos(432, 100-16);
+		m_img3.SetPos(482, 100-16);
 		m_img3.Draw();
 	}
 }

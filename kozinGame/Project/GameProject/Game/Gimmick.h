@@ -9,6 +9,7 @@ public:
 	~Warp();
 	void Draw();
 };
+
 class Gravity2 :public Base {
 public:
 	int m_stage;
@@ -16,5 +17,17 @@ public:
 public:
 	Gravity2(int stage, const CRect& rect);
 	~Gravity2();
+	void Draw();
+};
+
+class Gravity3 :public Base {
+public:
+	int m_stage;
+	bool m_gravity;
+public:
+	int i;
+	Gravity3(int stage, const CRect& rect);
+	~Gravity3();
+	void Update();
 	void Draw();
 };

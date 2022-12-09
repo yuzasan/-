@@ -312,8 +312,8 @@ void Player::Update() {
 	m_hit_Warp = false;
 
 	//ÉXÉNÉçÅ[Éãê›íË
-	m_scroll.x = m_pos.x - 1280 / 2;
-	m_scroll.y = m_pos.y - 600;
+	m_scroll.x = m_pos.x - 1920 / 2;
+	m_scroll.y = m_pos.y - 680;
 }
 
 void Player::Draw() {

@@ -9,28 +9,56 @@
 #include "UI.h"
 
 Game::Game() : Base(eType_Scene) {
-	Base::Add(new Map(1,CVector2D(100,100)));
+	Base::Add(new Map(0,CVector2D(100,100)));
 	//プレイヤーの生成
-	Base::Add(new Player(CVector2D(32 * 65, 1340), false));
+	Base::Add(new Player(CVector2D(MAP_TIP_SIZE * 20, 1340), false));
 	//Base::Add(new Player(CVector2D(100, 32 * 8), false));
 }
 
 Game::~Game(){
-	//全てのオブジェクトを破棄
-	Base::KillAll();
-	GameData::a = 0;
-	GameData::life = 4;
-	GameData::ItemC = 3;
-	GameData::ItemK = 6;
-	GameData::time = 60;
-	//タイトルシーンへ
-	Base::Add(new Title());
+	switch (c) {
+	case 1:
+		//全てのオブジェクトを破棄
+		Base::KillAll();
+		GameData::a = 0;
+		GameData::life = 4;
+		GameData::ItemC = 3;
+		GameData::ItemK = 6;
+		GameData::time = 60;
+		c = 0;
+		Base::Add(new GameClear());
+		break;
+	case 2:
+		//全てのオブジェクトを破棄
+		Base::KillAll();
+		GameData::a = 0;
+		GameData::life = 4;
+		GameData::ItemC = 3;
+		GameData::ItemK = 6;
+		GameData::time = 60;
+		c = 0;
+		Base::Add(new GameOver());
+		break;
+	default:
+		//全てのオブジェクトを破棄
+		Base::KillAll();
+		GameData::a = 0;
+		GameData::life = 4;
+		GameData::ItemC = 3;
+		GameData::ItemK = 6;
+		GameData::time = 60;
+		c = 0;
+		//タイトルシーンへ
+		Base::Add(new Title());
+		break;
+	}
 }
 
 void Game::Update(){
 	//ゴールが無ければゲームシーン終了
 	if (GameData::a==1) {
 		SetKill();
+		c = 1;
 	}
 
 
@@ -40,12 +68,14 @@ void Game::Update(){
 	}
 
 	//体力(Heart)がなくなりボタン1でゲームシーン終了
-	if (GameData::life == 0 && PUSH(CInput::eButton1)) {
+	if (GameData::life == 0 && !Base::FindObject(eType_Player)|| GameData::life == 0 && !Base::FindObject(eType_Change)) {
 		SetKill();
+		c = 2;
 	}
 
 	if (GameData::time <= 0) {
 		SetKill();
+		c = 2;
 	}
 	
 }
@@ -90,3 +120,55 @@ void Game::Update(){
 	}
 }
 */
+
+GameClear::GameClear() : Base(eType_Scene), m_clear_text("C:\\Windows\\Fonts\\msgothic.ttc", 64) {
+	m_img = COPY_RESOURCE("Title", CImage);//後で変更する
+}
+
+GameClear::~GameClear() {
+	//全てのオブジェクトを破棄
+	Base::KillAll();
+	//ゲームシーンへ
+	Base::Add(new Title());
+}
+
+void GameClear::Update() {
+	//ボタン1でタイトル破棄
+	if (PUSH(CInput::eButton1)) {
+		SetKill();
+	}
+}
+
+void GameClear::Draw() {
+	m_img.Draw();
+	//文字表示
+	m_clear_text.Draw(64, 255, 255, 255, 255, "ゲームクリア");
+	m_clear_text.Draw(64, 355, 255, 255, 255, "THANK YOU FOR PLAYING");
+	m_clear_text.Draw(64, 512, 255, 255, 255, "Push Z");
+}
+
+GameOver::GameOver() : Base(eType_Scene), m_over_text("C:\\Windows\\Fonts\\msgothic.ttc", 64) {
+	m_img = COPY_RESOURCE("Title", CImage);//後で変更する
+}
+
+GameOver::~GameOver() {
+	//全てのオブジェクトを破棄
+	Base::KillAll();
+	//ゲームシーンへ
+	Base::Add(new Title());
+}
+
+void GameOver::Update() {
+	//ボタン1でタイトル破棄
+	if (PUSH(CInput::eButton1)) {
+		SetKill();
+	}
+}
+
+void GameOver::Draw() {
+	m_img.Draw();
+	//文字表示
+	m_over_text.Draw(64, 255, 255, 255, 255, "ゲームオーバー");
+	m_over_text.Draw(64, 355, 255, 255, 255, "行動は慎重に");
+	m_over_text.Draw(64, 512, 255, 255, 255, "Push Z");
+}

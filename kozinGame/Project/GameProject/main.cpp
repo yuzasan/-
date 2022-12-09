@@ -31,8 +31,6 @@ void MainLoop(void) {
 	Base::CollisionAll();
 	Base::DrawAll();
 
-
-
 }
 void Init(void)
 {

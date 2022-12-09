@@ -308,13 +308,36 @@ void Change::Collision(Base* b) {
 			if (t == 1) {
 				m_pos.x = m_pos_old.x;
 			}
+			if (t == 2) {
+				m_pos.y = m_pos_old.y;
+			}
 			t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect);
+			if (t == 3) {
+				m_pos.x = m_pos_old.x;
+				m_is_ground = true;
+				m_is_ground2 = true;
+			}
+			if (t == 1) {
+				m_pos.y = m_pos_old.y;
+				m_vec.y = 0;
+				m_is_ground = true;
+				m_is_ground2 = true;
+			}
+			/*
+			else{
+				m_pos.y = m_pos_old.y;
+				m_vec.y = 0;
+				m_is_ground = true;
+				m_is_ground2 = true;
+			}
+			
 			if (t != 0) {
 				m_pos.y = m_pos_old.y;
 				m_vec.y = 0;
 				m_is_ground = true;
 				m_is_ground2 = true;
 			}
+			*/
 		}
 		break;
 	}
