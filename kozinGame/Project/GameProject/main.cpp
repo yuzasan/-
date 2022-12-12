@@ -103,7 +103,7 @@ void Init(void)
 	//フィールド
 	ADD_RESOURCE("ForeGround", CImage::CreateImage("Image/ForeGround.png"));
 	//マップ
-	ADD_RESOURCE("MapTip", CImage::CreateImage("Image/MapTip.png"));
+	ADD_RESOURCE("MapTip2", CImage::CreateImage("Image/MapTip2.png"));
 	//攻撃用オブジェクト
 	ADD_RESOURCE("Effect_Slash", CImage::CreateImage("Image/Effect_Slash.png", effect_slash_anim_data, 128, 128));
 	//スモーク用オブジェクト

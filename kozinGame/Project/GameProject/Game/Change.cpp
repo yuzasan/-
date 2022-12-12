@@ -308,7 +308,7 @@ void Change::Collision(Base* b) {
 			if (t == 1) {
 				m_pos.x = m_pos_old.x;
 			}
-			if (t == 2) {
+			if (t == 4) {
 				m_pos.y = m_pos_old.y;
 			}
 			t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect);
@@ -317,7 +317,7 @@ void Change::Collision(Base* b) {
 				m_is_ground = true;
 				m_is_ground2 = true;
 			}
-			if (t == 1) {
+			if (t == 1 || t == 4) {
 				m_pos.y = m_pos_old.y;
 				m_vec.y = 0;
 				m_is_ground = true;

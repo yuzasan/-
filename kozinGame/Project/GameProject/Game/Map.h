@@ -2,9 +2,9 @@
 #include "../Base/Base.h"
 //#include "Gamedata.h"
 //マップの横のチップ数
-#define MAP_WIDTH	4000
+#define MAP_WIDTH	80
 //マップの縦のチップ数
-#define MAP_HEIGHT	2200
+#define MAP_HEIGHT	40
 //マップチップの大きさ
 #define MAP_TIP_SIZE	64
 
