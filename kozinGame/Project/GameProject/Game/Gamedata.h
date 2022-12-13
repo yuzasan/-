@@ -9,4 +9,5 @@ public:
 	static int ItemC;
 	static int ItemK;
 	static int time;
+	//static int Z;
 };

@@ -121,7 +121,7 @@ Change::Change(const CVector2D& p, bool flip) : Base(eType_Change) {
 	//中心位置設定
 	m_img.SetCenter(32, 32);
 	//当たり判定用矩形設定
-	m_rect = CRect(-32, -32, 32, 0);
+	m_rect = CRect(-30, -32, 30, 0);
 	//反転フラグ
 	m_flip = flip;
 	//通常状態へ
@@ -147,6 +147,8 @@ Change::Change(const CVector2D& p, bool flip) : Base(eType_Change) {
 	m_is_ground2 = true;
 
 	//m_item = true;
+
+	m_zoom = true;
 }
 
 void Change::Update() {
@@ -195,8 +197,14 @@ void Change::Update() {
 	m_hit_Warp = false;
 
 	//スクロール設定
-	m_scroll.x = m_pos.x - 1280 / 2;
-	m_scroll.y = m_pos.y - 600;
+	if (!m_zoom) {
+		m_scroll.x = m_pos.x - 1920 / 2;
+		m_scroll.y = m_pos.y - 960;
+	}
+	else {
+		m_scroll.x = m_pos.x - 1920 / 2;
+		m_scroll.y = m_pos.y - 680;//元m_scroll.y = m_pos.y - 680
+	}
 }
 
 void Change::Draw() {
@@ -213,6 +221,14 @@ void Change::Draw() {
 
 void Change::Collision(Base* b) {
 	switch (b->m_type) {
+	case eType_Zoom:
+		if (Base::CollisionRect(this, b)) {
+			//ズームエリアに触れていたら
+			m_zoom = true;
+			if (m_zoom)
+				m_zoom = false;
+		}
+		break;
 	/*
 		//アイテム判定
 	case eType_Item:
@@ -304,6 +320,20 @@ void Change::Collision(Base* b) {
 		break;
 	case eType_Field:
 		if (Map* m = dynamic_cast<Map*>(b)) {
+			for (int i = 0; i < 4; i++) {
+				int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect, i);
+				if (t == 1 || t == 3) {
+					m_pos.x = m_pos_old.x;
+				}
+				t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect, i);
+				if (t == 1 || t == 4||t == 2) {
+					m_pos.y = m_pos_old.y;
+					m_vec.y = 0;
+					m_is_ground = true;
+					m_is_ground2 = true;
+				}
+			}
+			/*
 			int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect);
 			if (t == 1) {
 				m_pos.x = m_pos_old.x;
@@ -322,7 +352,7 @@ void Change::Collision(Base* b) {
 				m_vec.y = 0;
 				m_is_ground = true;
 				m_is_ground2 = true;
-			}
+			}*/
 			/*
 			else{
 				m_pos.y = m_pos_old.y;

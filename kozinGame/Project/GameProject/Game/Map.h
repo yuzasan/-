@@ -27,7 +27,8 @@ public:
 	int GetTip(int col, int raw);
 	//ƒ}ƒbƒv‚Æ‚Ì“–‚½‚è”»’è
 	int CollisionMap(const CVector2D& pos);
-	int CollisionMap(const CVector2D& pos, const CRect& rect);
+	int CollisionMap(const CVector2D& pos, const CRect& rect, int idx);
+	//int CollisionMap(const CVector2D& pos, const CRect& rect);
 	float GetGroundX() {
 		return m_ground_x;
 	}

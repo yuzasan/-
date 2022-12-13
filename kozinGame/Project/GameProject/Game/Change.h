@@ -26,6 +26,9 @@ private:
 
 	//アイテムフラグ
 	//bool m_item;
+	
+	//ズームフラグ
+	bool m_zoom;
 
 	//エリアチェンジフラグ
 	bool m_enable_area_change;

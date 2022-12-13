@@ -31,3 +31,15 @@ public:
 	void Update();
 	void Draw();
 };
+
+class Zoom :public Base {
+public:
+	int m_stage;
+	bool m_zoom;
+public:
+	Zoom(int stage, const CRect& rect);
+	~Zoom();
+	void UpDate();
+	void Draw();
+	//void Collision(Base* b);
+};

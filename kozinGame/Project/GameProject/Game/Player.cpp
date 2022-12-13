@@ -261,6 +261,8 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	m_is_ground2 = true;
 
 	//m_item = true;
+
+	m_zoom = true;
 }
 
 void Player::Update() {
@@ -312,8 +314,14 @@ void Player::Update() {
 	m_hit_Warp = false;
 
 	//スクロール設定
-	m_scroll.x = m_pos.x - 1920 / 2;
-	m_scroll.y = m_pos.y - 680;
+	if (!m_zoom) {
+		m_scroll.x = m_pos.x - 1920 / 2;
+		m_scroll.y = m_pos.y - 960;
+	}
+	else {
+		m_scroll.x = m_pos.x - 1920 / 2;
+		m_scroll.y = m_pos.y - 680;//元m_scroll.y = m_pos.y - 680
+	}
 }
 
 void Player::Draw() {
@@ -330,6 +338,14 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	case eType_Zoom:
+		if (Base::CollisionRect(this, b)) {
+			m_zoom = true;
+			//ズームエリアに触れていたら
+			if (m_zoom)
+				m_zoom = false;
+		}
+		break;
 	/*
 	//アイテム判定
 	case eType_Item:
@@ -371,6 +387,7 @@ void Player::Collision(Base* b) {
 					KillByType(eType_Gravity2);
 					KillByType(eType_UI);
 					KillByType(eType_Item);
+					KillByType(eType_Zoom);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可
@@ -438,6 +455,20 @@ void Player::Collision(Base* b) {
 		break;
 		*/
 		if (Map* m = dynamic_cast<Map*>(b)) {
+			for (int i = 0; i < 4; i++) {
+				int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect, i);
+				if (t != 0) {
+					m_pos.x = m_pos_old.x;
+				}
+				t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect, i);
+				if (t != 0) {
+					m_pos.y = m_pos_old.y;
+					m_vec.y = 0;
+					m_is_ground = true;
+					m_is_ground2 = true;
+				}
+			}
+			/*
 			int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect);
 			if (t != 0) {
 				m_pos.x = m_pos_old.x;
@@ -448,7 +479,7 @@ void Player::Collision(Base* b) {
 				m_vec.y = 0;
 				m_is_ground = true;
 				m_is_ground2 = true;
-			}
+			}*/
 		}
 		break;
 	}

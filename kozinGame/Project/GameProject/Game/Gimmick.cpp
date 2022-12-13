@@ -63,3 +63,35 @@ void Gravity3::Update() {
 void Gravity3::Draw() {
 	DrawRect();
 }
+
+Zoom::Zoom(int stage, const CRect& rect) :Base(eType_Zoom) {
+	m_stage = stage;
+	m_pos = CVector2D(rect.m_left, rect.m_top);
+	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
+}
+
+Zoom::~Zoom(){
+
+}
+
+void Zoom::UpDate(){
+
+}
+
+void Zoom::Draw(){
+	
+}
+
+/*
+void Zoom::Collision(Base* b){
+	switch (b->m_type) {
+		//ƒAƒCƒeƒ€”»’è
+	case eType_Player:
+		GameData::Z = 1;
+		break;
+	case eType_Change:
+		GameData::Z = 1;
+		break;
+	}
+}
+*/
