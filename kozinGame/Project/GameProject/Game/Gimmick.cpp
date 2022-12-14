@@ -17,32 +17,33 @@ void Warp::Draw(){
 	DrawRect();
 }
 
-Gravity2::Gravity2(int stage, const CRect& rect) :Base(eType_Gravity2) {
+Gravity_Up::Gravity_Up(int stage, const CRect& rect) :Base(eType_Gravity_Up) {
 	m_stage = stage;
 	m_pos = CVector2D(rect.m_left, rect.m_top);
 	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
 }
 
-Gravity2::~Gravity2(){
+Gravity_Up::~Gravity_Up(){
 
 }
 
-void Gravity2::Draw(){
+void Gravity_Up::Draw(){
 	DrawRect();
 }
 
-Gravity3::Gravity3(int stage, const CRect& rect) :Base(eType_Gravity2) {
+Gravity_Right::Gravity_Right(int stage, const CRect& rect) :Base(eType_Gravity_Right) {
 	m_stage = stage;
 	m_pos = CVector2D(rect.m_left, rect.m_top);
 	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
-	i = i;
+	//i = i;
 }
 
-Gravity3::~Gravity3() {
+Gravity_Right::~Gravity_Right() {
 
 }
 
-void Gravity3::Update() {
+void Gravity_Right::Update() {
+	/*
 	i++;
 	if (i % 120 == 0) {
 		GameData::k = 1;
@@ -58,9 +59,24 @@ void Gravity3::Update() {
 			CRect(32 * 66, 1024, 32 * 12, 32 * 10)));//32*2で1マップチップ
 			//CRect(32 * 66, 32 * 32, 512, 512)));
 	}
+	*/
 }
 
-void Gravity3::Draw() {
+void Gravity_Right::Draw() {
+	DrawRect();
+}
+
+Gravity_Left::Gravity_Left(int stage, const CRect& rect) :Base(eType_Gravity_Left) {
+	m_stage = stage;
+	m_pos = CVector2D(rect.m_left, rect.m_top);
+	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
+}
+
+Gravity_Left::~Gravity_Left() {
+
+}
+
+void Gravity_Left::Draw() {
 	DrawRect();
 }
 
@@ -79,7 +95,7 @@ void Zoom::UpDate(){
 }
 
 void Zoom::Draw(){
-	
+	//DrawRect();
 }
 
 /*

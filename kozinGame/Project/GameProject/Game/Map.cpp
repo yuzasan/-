@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "Player.h"
+#include "Change.h"
 #include "Enemy.h"
 #include "Goal.h"
 #include "AreaChange.h"
@@ -171,11 +172,11 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 			CVector2D(32 * 3, 1340)));//左下
 
 		Base::Add(new AreaChange(GameData::stage = 3,
-			CRect(MAP_TIP_SIZE * 26, MAP_TIP_SIZE * 19, 64, 128),
+			CRect(MAP_TIP_SIZE * 24, MAP_TIP_SIZE * 19, 64, 128),
 			CVector2D(32 * 3, 1340)));
 
 		Base::Add(new AreaChange(GameData::stage = 4,
-			CRect(MAP_TIP_SIZE * 33, MAP_TIP_SIZE * 19, 64, 128),
+			CRect(MAP_TIP_SIZE * 31, MAP_TIP_SIZE * 19, 64, 128),
 			CVector2D(32 * 3, MAP_TIP_SIZE *2 )));
 
 		/*
@@ -190,11 +191,17 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 		*/
 
 		//重力エリアの生成
-		Base::Add(new Gravity2(GameData::stage = 1,
+		Base::Add(new Gravity_Up(GameData::stage = 0,
 			CRect(MAP_TIP_SIZE * 1, MAP_TIP_SIZE * 7, MAP_TIP_SIZE * 3, MAP_TIP_SIZE * 14)));//32*2で1マップチップ
 
-		Base::Add(new Gravity2(GameData::stage = 1,
+		Base::Add(new Gravity_Up(GameData::stage = 0,
 			CRect(MAP_TIP_SIZE * 36, MAP_TIP_SIZE * 7, MAP_TIP_SIZE * 3, MAP_TIP_SIZE * 14)));
+
+		Base::Add(new Gravity_Left(GameData::stage = 0,
+			CRect(MAP_TIP_SIZE * 17, MAP_TIP_SIZE * 19, MAP_TIP_SIZE * 2, MAP_TIP_SIZE * 2)));
+
+		Base::Add(new Gravity_Right(GameData::stage = 0,
+			CRect(MAP_TIP_SIZE * 21, MAP_TIP_SIZE * 19, MAP_TIP_SIZE * 2, MAP_TIP_SIZE * 2)));
 
 		break;
 	case 1:
@@ -234,7 +241,7 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 		Base::Add(new ItemK(CVector2D(32 * 59, 1340-32)));
 
 		//重力エリアの生成
-		Base::Add(new Gravity2(GameData::stage = 1,
+		Base::Add(new Gravity_Up(GameData::stage = 1,
 			CRect(32 * 66, 1024, 32 * 12, 32 * 10)));//32*2で1マップチップ
 			//CRect(32 * 66, 32 * 32, 512, 512)));
 
@@ -304,6 +311,11 @@ Map::Map(int stage,const CVector2D& nextplayerpos) : Base(eType_Field), m_title_
 
 	//プレイヤーの位置決定
 	if (Base* p = Base::FindObject(eType_Player)) {
+		p->ResetPos(nextplayerpos);
+	}
+
+	//プレイヤーの位置決定
+	if (Base* p = Base::FindObject(eType_Change)) {
 		p->ResetPos(nextplayerpos);
 	}
 }

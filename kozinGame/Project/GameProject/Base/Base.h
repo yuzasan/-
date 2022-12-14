@@ -6,7 +6,9 @@
 
 enum {
 	eType_Zoom,
-	eType_Gravity2,//•\¦‚Ì‡”Ô‚ª‘å–
+	eType_Gravity_Up,//•\¦‚Ì‡”Ô‚ª‘å–
+	eType_Gravity_Right,
+	eType_Gravity_Left,
 	eType_Field,
 	eType_Warp,
 	eType_Player,

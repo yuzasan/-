@@ -10,25 +10,35 @@ public:
 	void Draw();
 };
 
-class Gravity2 :public Base {
+class Gravity_Up :public Base {
 public:
 	int m_stage;
 	bool m_gravity;
 public:
-	Gravity2(int stage, const CRect& rect);
-	~Gravity2();
+	Gravity_Up(int stage, const CRect& rect);
+	~Gravity_Up();
 	void Draw();
 };
 
-class Gravity3 :public Base {
+class Gravity_Right :public Base {
 public:
 	int m_stage;
 	bool m_gravity;
 public:
 	int i;
-	Gravity3(int stage, const CRect& rect);
-	~Gravity3();
+	Gravity_Right(int stage, const CRect& rect);
+	~Gravity_Right();
 	void Update();
+	void Draw();
+};
+
+class Gravity_Left :public Base {
+public:
+	int m_stage;
+	bool m_gravity;
+public:
+	Gravity_Left(int stage, const CRect& rect);
+	~Gravity_Left();
 	void Draw();
 };
 

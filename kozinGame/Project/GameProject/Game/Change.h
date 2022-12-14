@@ -22,7 +22,13 @@ private:
 	bool m_is_ground;
 
 	//着地フラグ上
-	bool m_is_ground2;
+	bool m_is_ground_up;
+
+	//着地フラグ上
+	bool m_is_ground_right;
+
+	//着地フラグ上
+	bool m_is_ground_left;
 
 	//アイテムフラグ
 	//bool m_item;

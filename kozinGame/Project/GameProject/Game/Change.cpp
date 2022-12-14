@@ -144,7 +144,13 @@ Change::Change(const CVector2D& p, bool flip) : Base(eType_Change) {
 	m_hit_Warp = false;
 
 	//着地フラグ上
-	m_is_ground2 = true;
+	m_is_ground_up = true;
+
+	//着地フラグ右
+	m_is_ground_right = true;
+
+	//着地フラグ左
+	m_is_ground_left = true;
 
 	//m_item = true;
 
@@ -225,8 +231,9 @@ void Change::Collision(Base* b) {
 		if (Base::CollisionRect(this, b)) {
 			//ズームエリアに触れていたら
 			m_zoom = true;
-			if (m_zoom)
+			if (m_zoom) {
 				m_zoom = false;
+			}
 		}
 		break;
 	/*
@@ -243,15 +250,39 @@ void Change::Collision(Base* b) {
 		break;
 	*/
 		//重力判定
-	case eType_Gravity2:
+	case eType_Gravity_Up:
 		if (Base::CollisionRect(this, b)) {
 			//重力エリアに触れていたら
-			if (m_is_ground2)
-				m_is_ground2 = false;
+			if (m_is_ground_up)
+				m_is_ground_up = false;
 			//重力による落下
 			m_vec.y -= GRAVITY * 2;
 			m_pos += m_vec;
 		}
+		break;
+	case eType_Gravity_Right:
+		if (Base::CollisionRect(this, b)) {
+			//重力エリアに触れていたら
+			if (m_is_ground_right)
+				m_is_ground_right = false;
+			//重力による落下
+			m_vec.x += GRAVITY * 5;
+			m_pos += m_vec;
+		}
+		m_vec.x = 0;
+		m_is_ground_right = true;
+		break;
+	case eType_Gravity_Left:
+		if (Base::CollisionRect(this, b)) {
+			//重力エリアに触れていたら
+			if (m_is_ground_left)
+				m_is_ground_left = false;
+			//重力による落下
+			m_vec.x -= GRAVITY * 5;
+			m_pos += m_vec;
+		}
+		m_vec.x = 0;
+		m_is_ground_left = true;
 		break;
 		//エリアチェンジ判定
 	case eType_AreaChange:
@@ -267,11 +298,17 @@ void Change::Collision(Base* b) {
 					KillByType(eType_Warp);
 					KillByType(eType_Enemy);
 					KillByType(eType_Goal);
-					KillByType(eType_Gravity2);
+					KillByType(eType_Gravity_Up);
+					KillByType(eType_Gravity_Right);
+					KillByType(eType_Gravity_Left);
+					KillByType(eType_UI);
+					KillByType(eType_Item);
+					KillByType(eType_Zoom);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可
 					m_enable_area_change = false;
+					m_zoom = true;
 				}
 			}
 		}
@@ -330,7 +367,7 @@ void Change::Collision(Base* b) {
 					m_pos.y = m_pos_old.y;
 					m_vec.y = 0;
 					m_is_ground = true;
-					m_is_ground2 = true;
+					m_is_ground_up = true;
 				}
 			}
 			/*
