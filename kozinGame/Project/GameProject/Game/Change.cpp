@@ -117,11 +117,11 @@ Change::Change(const CVector2D& p, bool flip) : Base(eType_Change) {
 	//m_img.ChangeAnimation(0);
 	//座標設定
 	m_pos_old = m_pos = p;
-	m_img.SetSize(64, 32);
+	m_img.SetSize(52, 32);
 	//中心位置設定
-	m_img.SetCenter(32, 32);
+	m_img.SetCenter(26, 32);
 	//当たり判定用矩形設定
-	m_rect = CRect(-30, -32, 30, 0);
+	m_rect = CRect(-26, -32, 26, 0);
 	//反転フラグ
 	m_flip = flip;
 	//通常状態へ
@@ -256,7 +256,7 @@ void Change::Collision(Base* b) {
 			if (m_is_ground_up)
 				m_is_ground_up = false;
 			//重力による落下
-			m_vec.y -= GRAVITY * 2;
+			m_vec.y -= GRAVITY * 1.5f;
 			m_pos += m_vec;
 		}
 		break;
@@ -266,7 +266,12 @@ void Change::Collision(Base* b) {
 			if (m_is_ground_right)
 				m_is_ground_right = false;
 			//重力による落下
-			m_vec.x += GRAVITY * 5;
+			if (m_pos.x + m_rect.m_left < b->m_pos.x + b->m_rect.m_right - 7) {
+				m_vec.x += GRAVITY * 25;
+			}
+			else {
+				m_pos.x = m_pos_old.x;
+			}
 			m_pos += m_vec;
 		}
 		m_vec.x = 0;
@@ -278,7 +283,12 @@ void Change::Collision(Base* b) {
 			if (m_is_ground_left)
 				m_is_ground_left = false;
 			//重力による落下
-			m_vec.x -= GRAVITY * 5;
+			if (m_pos.x + m_rect.m_right > b->m_pos.x + b->m_rect.m_left + 7) {
+				m_vec.x -= GRAVITY * 25;
+			}
+			else {
+				m_pos.x = m_pos_old.x;
+			}
 			m_pos += m_vec;
 		}
 		m_vec.x = 0;

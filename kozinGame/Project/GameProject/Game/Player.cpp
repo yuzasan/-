@@ -222,16 +222,17 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	m_img.ChangeAnimation(0);
 	//座標設定
 	m_pos_old = m_pos = p;
-	m_img.SetSize(64, 64);
+	m_img.SetSize(60, 52);//m_img.SetSize(64, 64);
 	//m_img.SetSize(128, 128);
 	//中心位置設定
-	m_img.SetCenter(32, 64);
+	m_img.SetCenter(30, 52);//m_img.SetCenter(32, 64);
 	//m_img.SetCenter(64, 128);
 	//実サイズ
 	//m_img.SetCenter(16, 32);
 	//当たり判定用矩形設定
 	//拡大
-	m_rect = CRect(-29, -60, 29, 0);
+	m_rect = CRect(-26, -60, 26, 0);//m_rect = CRect(-29, -60, 29, 0);
+
 	//m_rect = CRect(-32, -64, 32, 0);//大事
 	//m_rect = CRect(-64, -128, 64, 0);
 	//実サイズ
@@ -383,11 +384,22 @@ void Player::Collision(Base* b) {
 			if (m_is_ground_right)
 				m_is_ground_right = false;
 			//重力による落下
-			m_vec.x += GRAVITY * 25;
+			if (m_pos.x + m_rect.m_left < b->m_pos.x + b->m_rect.m_right - 4) {
+				m_vec.x += GRAVITY * 25;
+			}
+			else {
+				m_pos.x = m_pos_old.x;
+			}
 			m_pos += m_vec;
+			//プレイヤーm_pos.x+m_rect.m_right - エリア	b->m_pos.x+b->m_rect.m_left
+			//エリア	b->m_pos.x+b->m_rect.m_left
+			//m_pos.x+m_rect.m_right - b->m_pos.x+b->m_rect.m_left
+			if (PUSH(CInput::eButton2)) {
+				m_vec.y = 0;
+			}
 		}
-		m_vec.x = 0;
 		m_is_ground_right = true;
+		m_vec.x = 0;
 		break;
 	case eType_Gravity_Left:
 		if (Base::CollisionRect(this, b)) {
@@ -395,11 +407,19 @@ void Player::Collision(Base* b) {
 			if (m_is_ground_left)
 				m_is_ground_left = false;
 			//重力による落下
-			m_vec.x -= GRAVITY * 25;
+			if (m_pos.x + m_rect.m_right > b->m_pos.x + b->m_rect.m_left + 4) {
+				m_vec.x -= GRAVITY * 25;
+			}
+			else {
+				m_pos.x = m_pos_old.x;
+			}
 			m_pos += m_vec;
+			if (PUSH(CInput::eButton2)) {
+				m_vec.y = 0;
+			}
 		}
-		m_vec.x = 0;
 		m_is_ground_left = true;
+		m_vec.x = 0;
 		break;
 	//エリアチェンジ判定
 	case eType_AreaChange:
