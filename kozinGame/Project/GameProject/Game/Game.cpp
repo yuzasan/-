@@ -64,7 +64,7 @@ void Game::Update(){
 
 	//エンターキー(ボタン10)でゲームシーン終了
 	if (PUSH(CInput::eButton10)) {
-		SetKill();
+		//SetKill();
 	}
 
 	//体力(Heart)がなくなりボタン1でゲームシーン終了

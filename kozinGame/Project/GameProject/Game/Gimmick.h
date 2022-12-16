@@ -53,3 +53,13 @@ public:
 	void Draw();
 	//void Collision(Base* b);
 };
+
+class Rup :public Base {
+public:
+	int m_stage;
+	bool m_gravity;
+public:
+	Rup(int stage, const CRect& rect);
+	~Rup();
+	void Draw();
+};

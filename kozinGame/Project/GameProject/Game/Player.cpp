@@ -329,6 +329,10 @@ void Player::Update() {
 		m_scroll.x = m_pos.x - 1920 / 2;
 		m_scroll.y = m_pos.y - 680;//Œ³m_scroll.y = m_pos.y - 680
 	}
+	if (m_scroll.x < 0)m_scroll.x = 0;
+	if (m_scroll.x > MAP_TIP_SIZE * 40 - 1920)m_scroll.x = MAP_TIP_SIZE * 40 - 1920;
+	if (m_scroll.y < 0)m_scroll.y = 0;
+	if (m_scroll.y > MAP_TIP_SIZE * 22 - 1080)m_scroll.y = MAP_TIP_SIZE * 22 - 1080;
 }
 
 void Player::Draw() {
