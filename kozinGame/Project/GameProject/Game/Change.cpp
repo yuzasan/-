@@ -211,6 +211,10 @@ void Change::Update() {
 		m_scroll.x = m_pos.x - 1920 / 2;
 		m_scroll.y = m_pos.y - 680;//元m_scroll.y = m_pos.y - 680
 	}
+	if (m_scroll.x < 0)m_scroll.x = 0;
+	if (m_scroll.x > MAP_TIP_SIZE * 40 - 1920)m_scroll.x = MAP_TIP_SIZE * 40 - 1920;
+	if (m_scroll.y < 0)m_scroll.y = 0;
+	if (m_scroll.y > MAP_TIP_SIZE * 22 - 1080)m_scroll.y = MAP_TIP_SIZE * 22 - 1080;
 }
 
 void Change::Draw() {
@@ -314,6 +318,7 @@ void Change::Collision(Base* b) {
 					KillByType(eType_UI);
 					KillByType(eType_Item);
 					KillByType(eType_Zoom);
+					KillByType(eType_Smog);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可

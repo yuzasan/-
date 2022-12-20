@@ -117,6 +117,8 @@ void Init(void)
 	//アイテム
 	ADD_RESOURCE("ItemC", CImage::CreateImage("Image/ItemC.png"));
 	ADD_RESOURCE("ItemK", CImage::CreateImage("Image/ItemK.png"));
+	//スモッグ
+	ADD_RESOURCE("Kakusu", CImage::CreateImage("Image/Kakusu.png"));
 
 	/*
 	//プレイヤーの生成

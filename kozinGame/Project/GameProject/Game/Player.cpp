@@ -258,6 +258,9 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 	m_enable_Warp = true;
 	m_hit_Warp = false;
 
+	m_enable_Smog = true;
+	m_hit_Smog = false;
+
 	//着地フラグ上
 	m_is_ground_up = true;
 
@@ -320,6 +323,12 @@ void Player::Update() {
 		m_enable_Warp = true;
 	m_hit_Warp = false;
 
+	//一度スモッグ範囲から離れないと再度スモッグ生成しない
+	//連続スモッグ生成防止
+	if (!m_enable_Smog && !m_hit_Smog)
+		m_enable_Smog = true;
+	m_hit_Smog = false;
+
 	//スクロール設定
 	if (!m_zoom) {
 		m_scroll.x = m_pos.x - 1920 / 2;
@@ -349,6 +358,81 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+	case eType_SmogAll:
+		if (Base::CollisionRect(this, b)) {
+			//スモッグオブジェクトに触れている
+			m_hit_Smog = true;
+			//スモッグ生成可能なら
+			if (m_enable_Smog) {
+				KillByType(eType_Smog);
+				//スモッグの生成
+				//1段目左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 20, MAP_TIP_SIZE * 5)));
+				//1段目左中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 25, MAP_TIP_SIZE * 5)));
+				//1段目右中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 30, MAP_TIP_SIZE * 5)));
+				//1段目右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 35, MAP_TIP_SIZE * 5)));
+
+				//2段目左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 20, MAP_TIP_SIZE * 8)));
+				//2段目左中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 25, MAP_TIP_SIZE * 8)));
+				//2段目右中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 30, MAP_TIP_SIZE * 8)));
+				//2段目右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 35, MAP_TIP_SIZE * 8)));
+
+				//3段目左左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 5, MAP_TIP_SIZE * 11)));
+				//3段目左中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 10, MAP_TIP_SIZE * 11)));
+				//3段目中左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 15, MAP_TIP_SIZE * 11)));
+				//3段目中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 20, MAP_TIP_SIZE * 11)));
+				//3段目中右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 25, MAP_TIP_SIZE * 11)));
+				//3段目右中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 30, MAP_TIP_SIZE * 11)));
+				//3段目右右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 35, MAP_TIP_SIZE * 11)));
+
+				//4段目左左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 5, MAP_TIP_SIZE * 14)));
+				//4段目左中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 10, MAP_TIP_SIZE * 14)));
+				//4段目中左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 15, MAP_TIP_SIZE * 14)));
+				//4段目中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 20, MAP_TIP_SIZE * 14)));
+				//4段目中右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 25, MAP_TIP_SIZE * 14)));
+				//4段目右中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 30, MAP_TIP_SIZE * 14)));
+				//4段目右右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 35, MAP_TIP_SIZE * 14)));
+
+				//5段目左左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 5, MAP_TIP_SIZE * 17)));
+				//5段目左中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 10, MAP_TIP_SIZE * 17)));
+				//5段目中左
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 15, MAP_TIP_SIZE * 17)));
+				//5段目中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 20, MAP_TIP_SIZE * 17)));
+				//5段目中右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 25, MAP_TIP_SIZE * 17)));
+				//5段目右中
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 30, MAP_TIP_SIZE * 17)));
+				//5段目右右
+				Base::Add(new Smog(CVector2D(MAP_TIP_SIZE * 35, MAP_TIP_SIZE * 17)));
+				//エリアチェンジ一時不許可
+				m_enable_Smog = false;
+			}
+		}
+		break;
 	case eType_Zoom:
 		if (Base::CollisionRect(this, b)) {
 			m_zoom = true;
@@ -445,6 +529,8 @@ void Player::Collision(Base* b) {
 					KillByType(eType_UI);
 					KillByType(eType_Item);
 					KillByType(eType_Zoom);
+					KillByType(eType_Smog);
+					KillByType(eType_SmogAll);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可

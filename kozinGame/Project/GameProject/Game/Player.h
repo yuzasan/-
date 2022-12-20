@@ -46,6 +46,11 @@ private:
 	//エリアワープオブジェクトに触れているフラグ
 	bool m_hit_Warp;
 
+	//エリアスモッグフラグ
+	bool m_enable_Smog;
+	//エリアスモッグオブジェクトに触れているフラグ
+	bool m_hit_Smog;
+
 	//攻撃番号
 	int m_attack_no;
 	//ダメージ番号

@@ -54,12 +54,24 @@ public:
 	//void Collision(Base* b);
 };
 
-class Rup :public Base {
+class Smog :public Base {
+public:
+	CImage m_img;
+public:
+	int s;
+	Smog(const CVector2D& pos);
+	void Kill();
+	void Update();
+	void Draw();
+	void Collision(Base* b);
+};
+
+class SmogAll :public Base {
 public:
 	int m_stage;
-	bool m_gravity;
+	bool m_smog;
 public:
-	Rup(int stage, const CRect& rect);
-	~Rup();
+	SmogAll(int stage, const CRect& rect);
+	~SmogAll();
 	void Draw();
 };

@@ -111,3 +111,60 @@ void Zoom::Collision(Base* b){
 	}
 }
 */
+
+Smog::Smog(const CVector2D& pos):Base(eType_Smog){
+	m_img = COPY_RESOURCE("Kakusu", CImage);
+	m_pos = pos;
+	m_img.SetSize(64*5, 64*3);
+	m_img.SetCenter(64*2+32, 64+32);
+	m_rect = CRect(-64*3+32, -64-32, 64*3-32, 64+32);
+}
+
+void Smog::Kill(){
+	m_kill = true;
+}
+
+void Smog::Update(){
+	switch (s) {
+	case 1:
+		Kill();
+		break;
+	default:
+		break;
+	}
+}
+
+void Smog::Draw(){
+	m_img.SetPos(GetScreenPos(m_pos));
+	m_img.Draw();
+	DrawRect();
+}
+
+void Smog::Collision(Base* b){
+	switch (b->m_type) {
+		//ƒAƒCƒeƒ€”»’è
+	case eType_Player:
+		if (Base::CollisionRect(this, b)) {
+			s = 1;
+		}
+		break;
+	case eType_Change:
+		if (Base::CollisionRect(this, b)) {
+			s = 1;
+		}
+	}
+}
+
+SmogAll::SmogAll(int stage, const CRect& rect):Base(eType_SmogAll){
+	m_stage = stage;
+	m_pos = CVector2D(rect.m_left, rect.m_top);
+	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
+}
+
+SmogAll::~SmogAll(){
+
+}
+
+void SmogAll::Draw(){
+	DrawRect();
+}

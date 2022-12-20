@@ -10,6 +10,8 @@ enum {
 	eType_Gravity_Right,
 	eType_Gravity_Left,
 	eType_Field,
+	eType_SmogAll,
+	eType_Smog,
 	eType_Warp,
 	eType_Player,
 	eType_Change,
