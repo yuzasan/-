@@ -9,13 +9,13 @@
 #include "UI.h"
 
 Game::Game() : Base(eType_Scene) {
-	Base::Add(new Map(0,CVector2D(100,100)));
+	Base::Add(new Map(0, CVector2D(100, 100)));
 	//プレイヤーの生成
 	Base::Add(new Player(CVector2D(MAP_TIP_SIZE * 20, 1340), false));
 	//Base::Add(new Player(CVector2D(100, 32 * 8), false));
 }
 
-Game::~Game(){
+Game::~Game() {
 	switch (c) {
 	case 1:
 		//全てのオブジェクトを破棄
@@ -24,7 +24,8 @@ Game::~Game(){
 		GameData::life = 4;
 		GameData::ItemC = 3;
 		GameData::ItemK = 6;
-		GameData::time = 60;
+		GameData::time = 240;//GameData::time = 60;
+		GameData::S = 0;
 		c = 0;
 		Base::Add(new GameClear());
 		break;
@@ -36,6 +37,7 @@ Game::~Game(){
 		GameData::ItemC = 3;
 		GameData::ItemK = 6;
 		GameData::time = 60;
+		GameData::S = 0;
 		c = 0;
 		Base::Add(new GameOver());
 		break;
@@ -47,6 +49,7 @@ Game::~Game(){
 		GameData::ItemC = 3;
 		GameData::ItemK = 6;
 		GameData::time = 60;
+		GameData::S = 0;
 		c = 0;
 		//タイトルシーンへ
 		Base::Add(new Title());
@@ -54,21 +57,29 @@ Game::~Game(){
 	}
 }
 
-void Game::Update(){
+void Game::Update() {
+	if (a > 36000) {
+		a = 0;
+	}
+	a++;
 	//ゴールが無ければゲームシーン終了
-	if (GameData::a==1) {
+	if (GameData::a == 1) {
 		SetKill();
 		c = 1;
 	}
-
 
 	//エンターキー(ボタン10)でゲームシーン終了
 	if (PUSH(CInput::eButton10)) {
 		//SetKill();
 	}
 
+	//マウス右clickでゲームシーン終了
+	if (PUSH(CInput::eMouseR)) {
+		SetKill();
+	}
+
 	//体力(Heart)がなくなりボタン1でゲームシーン終了
-	if (GameData::life == 0 && !Base::FindObject(eType_Player)|| GameData::life == 0 && !Base::FindObject(eType_Change)) {
+	if (GameData::life == 0 && !Base::FindObject(eType_Player) || GameData::life == 0 && !Base::FindObject(eType_Change)) {
 		SetKill();
 		c = 2;
 	}
@@ -77,7 +88,17 @@ void Game::Update(){
 		SetKill();
 		c = 2;
 	}
-	
+
+	if (GameData::S == 1) {
+		b++;
+		if (b == 1) {
+			GameData::random = rand() % 600 + 900;
+		}
+	}
+	else {
+		b = 0;
+	}
+	printf("random:%d t:%d\n", GameData::random, GameData::t);
 }
 
 

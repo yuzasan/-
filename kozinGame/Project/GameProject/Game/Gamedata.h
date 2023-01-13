@@ -9,5 +9,7 @@ public:
 	static int ItemC;
 	static int ItemK;
 	static int time;
-	//static int Z;
+	static int S;
+	static int t;
+	static int random;
 };

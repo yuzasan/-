@@ -12,6 +12,7 @@
 #include "Gamedata.h"
 #include "UI.h"
 #include "Item.h"
+#include "Siya.h"
 
 void Player::StateIdle() {
 	//移動量
@@ -89,7 +90,8 @@ void Player::StateIdle() {
 			m_vec.y = jump_pow * 0.8;
 			m_is_ground_up = false;
 		}
-	} else {
+	}
+	else {
 		//ジャンプ
 		if (m_is_ground && PUSH(CInput::eButton2)) {
 			m_vec.y = -jump_pow;
@@ -101,7 +103,7 @@ void Player::StateIdle() {
 	//ジャンプ中なら
 	if (!m_is_ground && m_is_ground_up) {
 		//ジャンプ回数制限
-		if (m_cnt<3) {
+		if (m_cnt < 3) {
 			//二段ジャンプ
 			if (!m_is_ground && PUSH(CInput::eButton2)) {
 				m_vec.y = -jump_pow;
@@ -130,7 +132,7 @@ void Player::StateIdle() {
 			//走るアニメーション
 			m_img.ChangeAnimation(eAnimRun);
 		}
-		else if(move_flag) {
+		else if (move_flag) {
 			//歩くアニメーション
 			m_img.ChangeAnimation(eAnimWalk);
 		}
@@ -171,14 +173,15 @@ void Player::StateIdle() {
 
 }
 
-void Player::StateAttack(){
+void Player::StateAttack() {
 	//攻撃アニメーションへ変更
 	m_img.ChangeAnimation(eAnimAttack01, false);
 	//3番目のパターンなら
 	if (m_img.GetIndex() == 1) {
 		if (m_flip) {
 			Base::Add(new Slash(m_pos + CVector2D(-64, -64), m_flip, eType_Player_Attack, m_attack_no));
-		}else {
+		}
+		else {
 			Base::Add(new Slash(m_pos + CVector2D(64, -64), m_flip, eType_Player_Attack, m_attack_no));
 		}
 	}
@@ -189,7 +192,7 @@ void Player::StateAttack(){
 	}
 }
 
-void Player::StateDamage(){
+void Player::StateDamage() {
 	//ダメージアニメーションへ変更
 	m_img.ChangeAnimation(eAnimDamage, false);
 	//アニメーションが終了したら
@@ -211,7 +214,7 @@ void Player::StateDown() {
 }
 
 void Player::StateChange() {
-	Base::Add(new Change(m_pos,false));
+	Base::Add(new Change(m_pos, false));
 	SetKill();
 }
 
@@ -272,6 +275,8 @@ Player::Player(const CVector2D& p, bool flip) : Base(eType_Player) {
 
 	//m_item = true;
 
+	//m_siya = true;
+
 	m_zoom = true;
 }
 
@@ -314,7 +319,7 @@ void Player::Update() {
 	//一度エリアチェンジ範囲から離れないと再度エリアチェンジしない
 	//連続エリアチェンジ防止
 	if (!m_enable_area_change && !m_hit_area_change)
-			m_enable_area_change = true;
+		m_enable_area_change = true;
 	m_hit_area_change = false;
 
 	//一度ワープ範囲から離れないと再度ワープしない
@@ -338,6 +343,7 @@ void Player::Update() {
 		m_scroll.x = m_pos.x - 1920 / 2;
 		m_scroll.y = m_pos.y - 680;//元m_scroll.y = m_pos.y - 680
 	}
+
 	if (m_scroll.x < 0)m_scroll.x = 0;
 	if (m_scroll.x > MAP_TIP_SIZE * 40 - 1920)m_scroll.x = MAP_TIP_SIZE * 40 - 1920;
 	if (m_scroll.y < 0)m_scroll.y = 0;
@@ -358,6 +364,21 @@ void Player::Draw() {
 
 void Player::Collision(Base* b) {
 	switch (b->m_type) {
+		/*
+		case eType_Siya:
+			if (Siya* s = dynamic_cast<Siya*>(b)) {
+				if (Base::CollisionRect(this, s)) {
+					m_siya = true;
+					//視野に触れていたら
+					if (m_siya) {
+						GameData::S = 1;
+						m_siya = false;
+					}
+					GameData::S = 0;
+				}
+			}
+			break;
+		*/
 	case eType_SmogAll:
 		if (Base::CollisionRect(this, b)) {
 			//スモッグオブジェクトに触れている
@@ -442,20 +463,20 @@ void Player::Collision(Base* b) {
 			}
 		}
 		break;
-	/*
-	//アイテム判定
-	case eType_Item:
-		if (Base::CollisionRect(this, b)) {
-			//アイテムに触れていたら
-			if (m_item) {
-				GameData::Item = GameData::Item + 1;
-				//KillByType(eType_Item);
-				m_item = false;
+		/*
+		//アイテム判定
+		case eType_Item:
+			if (Base::CollisionRect(this, b)) {
+				//アイテムに触れていたら
+				if (m_item) {
+					GameData::Item = GameData::Item + 1;
+					//KillByType(eType_Item);
+					m_item = false;
+				}
 			}
-		}
-		break;
-	*/
-	//重力判定
+			break;
+		*/
+		//重力判定
 	case eType_Gravity_Up:
 		if (Base::CollisionRect(this, b)) {
 			//重力エリアに触れていたら
@@ -509,9 +530,9 @@ void Player::Collision(Base* b) {
 		m_is_ground_left = true;
 		m_vec.x = 0;
 		break;
-	//エリアチェンジ判定
+		//エリアチェンジ判定
 	case eType_AreaChange:
-		if (Base::CollisionRect(this, b)&& PUSH(CInput::eButton5)) {//スペースキー
+		if (Base::CollisionRect(this, b) && PUSH(CInput::eButton5)) {//スペースキー
 			//エリアチェンジに触れている
 			m_hit_area_change = true;
 			//エリアチェンジ可能なら
@@ -531,6 +552,8 @@ void Player::Collision(Base* b) {
 					KillByType(eType_Zoom);
 					KillByType(eType_Smog);
 					KillByType(eType_SmogAll);
+					KillByType(eType_Siya);
+					KillByType(eType_Boss);
 					//次のマップを生成
 					Base::Add(new Map(a->m_stage, a->m_nextplayerpos));
 					//エリアチェンジ一時不許可
@@ -540,7 +563,7 @@ void Player::Collision(Base* b) {
 			}
 		}
 		break;
-	//ワープ判定
+		//ワープ判定
 	case eType_Warp:
 		if (Base::CollisionRect(this, b)) {
 			//ワープに触れている
@@ -555,14 +578,14 @@ void Player::Collision(Base* b) {
 			}
 		}
 		break;
-	//ゴール判定
+		//ゴール判定
 	case eType_Goal:
 		if (Base::CollisionRect(this, b)) {
 			b->SetKill();
 			GameData::a = 1;
 		}
 		break;
-	//攻撃オブジェクトとの判定
+		//攻撃オブジェクトとの判定
 	case eType_Enemy_Attack:
 		//Slash型へキャスト、型変換できたら
 		if (Slash* s = dynamic_cast<Slash*>(b)) {

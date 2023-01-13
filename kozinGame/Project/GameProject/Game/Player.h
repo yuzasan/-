@@ -33,6 +33,9 @@ private:
 	//アイテムフラグ
 	//bool m_item;
 
+	//視野フラグ
+	bool m_siya;
+
 	//ズームフラグ
 	bool m_zoom;
 

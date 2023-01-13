@@ -96,6 +96,8 @@ void Init(void)
 	ADD_RESOURCE("Change", CImage::CreateImage("Image/Change.png"));
 	//“G
 	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Enemy.png", enemy_anim_data, 256, 256));
+	//ƒ{ƒX
+	ADD_RESOURCE("Boss", CImage::CreateImage("Image/Boss.png", boss_anim_data, 256, 256));
 	//‹ó
 	ADD_RESOURCE("Sky", CImage::CreateImage("Image/Sky.png"));
 	//ŠX

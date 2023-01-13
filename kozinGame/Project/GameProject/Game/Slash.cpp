@@ -20,7 +20,7 @@ Slash::Slash(const CVector2D& pos, bool flip, int type, int attack_no) : Base(ty
 	m_attack_no = attack_no;
 }
 
-void Slash::Update(){
+void Slash::Update() {
 	//アニメーション更新
 	m_img.UpdateAnimation();
 	//アニメーション終了チェック
@@ -30,7 +30,7 @@ void Slash::Update(){
 	}
 }
 
-void Slash::Draw(){
+void Slash::Draw() {
 	m_img.SetPos(GetScreenPos(m_pos));
 	m_img.SetFlipH(m_flip);
 	m_img.Draw();

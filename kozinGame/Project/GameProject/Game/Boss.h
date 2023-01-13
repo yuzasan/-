@@ -1,7 +1,7 @@
 #pragma once
 #include "../Base/Base.h"
 
-class Enemy : public Base {
+class Boss : public Base {
 private:
 	//状態
 	enum {
@@ -42,7 +42,7 @@ public:
 	int k2 = 0;
 	int c = 0;
 	// コンストラクタ
-	Enemy(const CVector2D& pos, bool flip);
+	Boss(const CVector2D& pos, bool flip);
 	// 更新
 	void Update();
 	// 描画

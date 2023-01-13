@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "Boss.h"
 #include "../Base/Base.h"
 #include "Field.h"
 #include "Player.h"
@@ -11,8 +11,7 @@
 #include "Siya.h"
 #include "GameData.h"
 
-void Enemy::StateIdle() {
-
+void Boss::StateIdle() {
 	//移動量
 	const float move_speed = 6;
 	//移動フラグ
@@ -159,7 +158,8 @@ void Enemy::StateIdle() {
 		}
 	}
 }
-void Enemy::StateWait() {
+
+void Boss::StateWait() {
 	//待機アニメーション
 	m_img.ChangeAnimation(eAnimIdle);
 	//カウント0で通常状態へ
@@ -172,7 +172,7 @@ void Enemy::StateWait() {
 	}
 }
 
-void Enemy::StateAttack() {
+void Boss::StateAttack() {
 	//攻撃アニメーションへ変更
 	m_img.ChangeAnimation(eAnimAttack01, false);
 	//3番目のパターンなら
@@ -192,7 +192,7 @@ void Enemy::StateAttack() {
 	}
 }
 
-void Enemy::StateDamage() {
+void Boss::StateDamage() {
 	//ダメージアニメーションへ変更
 	m_img.ChangeAnimation(eAnimDamage, false);
 	//アニメーションが終了したら
@@ -203,7 +203,7 @@ void Enemy::StateDamage() {
 
 }
 
-void Enemy::StateDown() {
+void Boss::StateDown() {
 	//ダウンアニメーションへ変更
 	m_img.ChangeAnimation(eAnimDown, false);
 	//アニメーションが終了したら
@@ -212,28 +212,18 @@ void Enemy::StateDown() {
 		//通常状態へ移行
 		m_kill = true;
 		GameData::S = 0;
-		//printf("r:%d\n", r);
-		if (r % 2 == 0) {
-			Base::Add(new ItemC(CVector2D(m_pos.x, m_pos.y - 32)));
-			r = 0;
-		}
-		else {
-			Base::Add(new ItemK(CVector2D(m_pos.x, m_pos.y - 32)));
-			r = 0;
-		}
 	}
 }
 
-
-Enemy::Enemy(const CVector2D& p, bool flip) : Base(eType_Enemy) {
+Boss::Boss(const CVector2D& pos, bool flip) :Base(eType_Boss) {
 	//画像複製
-	m_img = COPY_RESOURCE("Enemy", CImage);
+	m_img = COPY_RESOURCE("Boss", CImage);
 	//再生アニメーション設定
 	m_img.ChangeAnimation(0);
 	//座標設定
-	m_pos = p;
+	m_pos = pos;
 	//座標設定
-	m_pos_old = m_pos = p;
+	m_pos_old = m_pos = pos;
 	//中心位置設定
 	m_img.SetCenter(128, 224);
 	//当たり判定用矩形設定
@@ -252,7 +242,7 @@ Enemy::Enemy(const CVector2D& p, bool flip) : Base(eType_Enemy) {
 	m_hp = 100;
 }
 
-void Enemy::Update() {
+void Boss::Update() {
 	m_pos_old = m_pos;
 	switch (m_state) {
 		//通常状態
@@ -288,13 +278,13 @@ void Enemy::Update() {
 	w++;
 
 	GameData::t++;
-	//printf("k2:%d t:%d\n", k2, GameData::t);
+	//printf("k2:%d t:%d\n",k2, GameData::t);
 
 	//アニメーション更新
 	m_img.UpdateAnimation();
 }
 
-void Enemy::Draw() {
+void Boss::Draw() {
 	//位置設定
 	m_img.SetPos(GetScreenPos(m_pos));
 	//反転設定
@@ -303,28 +293,11 @@ void Enemy::Draw() {
 	m_img.Draw();
 	//当たり判定矩形の表示
 	//DrawRect();
+	//DrawRectB();
 }
 
-void Enemy::Collision(Base* b) {
+void Boss::Collision(Base* b) {
 	switch (b->m_type) {
-		//攻撃オブジェクトとの判定
-	case eType_Player_Attack:
-		//Slash型へキャスト、型変換できたら
-		if (Slash* s = dynamic_cast<Slash*>(b)) {
-			if (m_damage_no != s->GetAttackNo() && Base::CollisionRect(this, s)) {
-				//同じ攻撃の連続ダメージ防止
-				m_damage_no = s->GetAttackNo();
-				m_hp -= 50;
-				if (m_hp <= 0) {
-					m_state = eState_Down;
-				}
-				else {
-					m_state = eState_Damage;
-				}
-				Base::Add(new Effect("Effect_Blood", m_pos + CVector2D(0, -128), m_flip));
-			}
-		}
-		break;
 	case eType_Field:
 		/*
 		if (Map* m = dynamic_cast<Map*>(b)) {
@@ -379,6 +352,24 @@ void Enemy::Collision(Base* b) {
 					m_is_ground = true;
 				}
 				*/
+			}
+		}
+		break;
+		//攻撃オブジェクトとの判定
+	case eType_Player_Attack:
+		//Slash型へキャスト、型変換できたら
+		if (Slash* s = dynamic_cast<Slash*>(b)) {
+			if (m_damage_no != s->GetAttackNo() && Base::CollisionRect(this, s)) {
+				//同じ攻撃の連続ダメージ防止
+				m_damage_no = s->GetAttackNo();
+				m_hp -= 50;
+				if (m_hp <= 0) {
+					m_state = eState_Down;
+				}
+				else {
+					m_state = eState_Damage;
+				}
+				Base::Add(new Effect("Effect_Blood", m_pos + CVector2D(0, -128), m_flip));
 			}
 		}
 		break;

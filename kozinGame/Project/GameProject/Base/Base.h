@@ -6,6 +6,7 @@
 
 enum {
 	eType_Zoom,
+	eType_Siya,
 	eType_Gravity_Up,//表示の順番が大事
 	eType_Gravity_Right,
 	eType_Gravity_Left,
@@ -16,6 +17,7 @@ enum {
 	eType_Player,
 	eType_Change,
 	eType_Enemy,
+	eType_Boss,
 	eType_Item,
 	eType_Bullet,
 	eType_Goal,
@@ -29,6 +31,9 @@ enum {
 
 class Base {
 public:
+
+	int m_animDir;// アニメーションの向き
+
 	//オブジェクトの種類
 	int m_type;
 	//座標
@@ -94,4 +99,7 @@ public:
 	static bool CollisionRect(Base* b1, Base* b2);
 	//矩形の表示
 	void DrawRect();
+	//矩形視界の表示
+	void DrawRectB();
+
 };

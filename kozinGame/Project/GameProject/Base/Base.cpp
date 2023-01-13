@@ -4,7 +4,7 @@ std::list<Base*> Base::m_list;
 //スクロール値の定義
 CVector2D Base::m_scroll(0, 0);
 
-Base* Base::FindObject(int type){
+Base* Base::FindObject(int type) {
 	//先頭の要素
 	auto it = m_list.begin();
 	//末尾の要素
@@ -21,7 +21,7 @@ Base* Base::FindObject(int type){
 	return nullptr;
 }
 
-std::list<Base*> Base::FindObjects(int type){
+std::list<Base*> Base::FindObjects(int type) {
 	std::list<Base*> ret;
 	for (auto& b : m_list) {
 		if (b->m_type == type)
@@ -31,46 +31,47 @@ std::list<Base*> Base::FindObjects(int type){
 }
 
 //コンストラクタのメンバ変数は : 変数名() で初期化でできる
-Base::Base(int type) : m_type(type),m_kill(false),m_pos(0, 0),m_vec(0,0),m_rad(0) {
+Base::Base(int type) : m_type(type), m_kill(false), m_pos(0, 0), m_vec(0, 0), m_rad(0) {
 
 }
 
-Base::~Base(){
+Base::~Base() {
 
 }
 
-void Base::Update(){
+void Base::Update() {
 
 }
 
-void Base::Draw(){
+void Base::Draw() {
 
 }
 
-void Base::Collision(Base* b){
+void Base::Collision(Base* b) {
 
 }
 
-CVector2D Base::GetScreenPos(const CVector2D& pos){
+CVector2D Base::GetScreenPos(const CVector2D& pos) {
 	//座標-スクロール値=画面上での位置
 	return pos - m_scroll;
 }
 
-void Base::CheckKillAll(){
+void Base::CheckKillAll() {
 	auto it = m_list.begin();
 	auto last = m_list.end();
 	while (it != last) {
 		if ((*it)->m_kill) {
 			delete(*it);
 			it = m_list.erase(it);
-		}else {
+		}
+		else {
 			//次へ
 			it++;
 		}
 	}
 }
 
-void Base::UpdateAll(){
+void Base::UpdateAll() {
 	//全てのオブジェクトの更新処理
 	//bはBaseのb
 	for (auto& b : m_list) {
@@ -78,7 +79,7 @@ void Base::UpdateAll(){
 	}
 }
 
-void Base::DrawAll(){
+void Base::DrawAll() {
 	//全てのオブジェクトの描画処理
 	//bはBaseのb
 	for (auto& b : m_list) {
@@ -86,7 +87,7 @@ void Base::DrawAll(){
 	}
 }
 
-void Base::Add(Base* b){
+void Base::Add(Base* b) {
 	//Type順によるソート
 	auto itr = m_list.begin();
 	while (itr != m_list.end()) {
@@ -102,7 +103,7 @@ void Base::Add(Base* b){
 	m_list.push_back(b);
 }
 
-void Base::KillAll(){
+void Base::KillAll() {
 	std::list<Base*>ret;
 	for (auto& b : m_list) {
 		b->SetKill();
@@ -119,7 +120,7 @@ void Base::KillByType(int type)
 	}
 }
 
-void Base::CollisionAll(){
+void Base::CollisionAll() {
 	//当たり判定の検証
 	auto it1 = m_list.begin();
 	auto last = m_list.end();
@@ -135,7 +136,7 @@ void Base::CollisionAll(){
 	}
 }
 
-bool Base::CollisionCircle(Base* b1, Base* b2){
+bool Base::CollisionCircle(Base* b1, Base* b2) {
 	CVector2D v = b1->m_pos - b2->m_pos;
 	float l = v.Length();
 	if (l < b1->m_rad + b2->m_rad) {
@@ -144,7 +145,7 @@ bool Base::CollisionCircle(Base* b1, Base* b2){
 	return false;
 }
 
-bool Base::CollisionRect(Base* b1, Base* b2){
+bool Base::CollisionRect(Base* b1, Base* b2) {
 	//b1の矩形
 	CRect rect1 = CRect(
 		b1->m_pos.x + b1->m_rect.m_left,
@@ -168,7 +169,7 @@ bool Base::CollisionRect(Base* b1, Base* b2){
 	return false;
 }
 
-void Base::DrawRect(){
+void Base::DrawRect() {
 	//デバック用 矩形表示
 	CRect rect = CRect(
 		m_pos.x + m_rect.m_left,
@@ -179,4 +180,17 @@ void Base::DrawRect(){
 		CVector2D(rect.m_left, rect.m_top) - m_scroll,
 		CVector2D(rect.m_width, rect.m_height),
 		CVector4D(1, 0, 0, 0.5f));
+}
+
+void Base::DrawRectB() {
+	//デバック用 矩形表示
+	CRect rect = CRect(
+		m_pos.x + m_rect.m_left,
+		m_pos.y + m_rect.m_top,
+		m_pos.x + m_rect.m_right,
+		m_pos.y + m_rect.m_bottom);
+	Utility::DrawQuad(
+		CVector2D(rect.m_left, rect.m_top) - m_scroll,
+		CVector2D(rect.m_width, rect.m_height),
+		CVector4D(0, 0, 1, 0.5f));
 }

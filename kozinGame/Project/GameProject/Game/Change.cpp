@@ -240,19 +240,19 @@ void Change::Collision(Base* b) {
 			}
 		}
 		break;
-	/*
-		//アイテム判定
-	case eType_Item:
-		if (Base::CollisionRect(this, b)) {
-			//アイテムに触れていたら
-			if (m_item) {
-				GameData::Item = GameData::Item + 1;
-				KillByType(eType_Item);
-				m_item = false;
+		/*
+			//アイテム判定
+		case eType_Item:
+			if (Base::CollisionRect(this, b)) {
+				//アイテムに触れていたら
+				if (m_item) {
+					GameData::Item = GameData::Item + 1;
+					KillByType(eType_Item);
+					m_item = false;
+				}
 			}
-		}
-		break;
-	*/
+			break;
+		*/
 		//重力判定
 	case eType_Gravity_Up:
 		if (Base::CollisionRect(this, b)) {
@@ -374,52 +374,17 @@ void Change::Collision(Base* b) {
 		if (Map* m = dynamic_cast<Map*>(b)) {
 			for (int i = 0; i < 4; i++) {
 				int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect, i);
-				if (t == 1 || t == 3) {
+				if (t == 1 || t == 2 || t == 3) {
 					m_pos.x = m_pos_old.x;
 				}
 				t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect, i);
-				if (t == 1 || t == 4||t == 2) {
+				if (t == 1 || t == 2 || t == 4) {
 					m_pos.y = m_pos_old.y;
 					m_vec.y = 0;
 					m_is_ground = true;
 					m_is_ground_up = true;
 				}
 			}
-			/*
-			int t = m->CollisionMap(CVector2D(m_pos.x, m_pos_old.y), m_rect);
-			if (t == 1) {
-				m_pos.x = m_pos_old.x;
-			}
-			if (t == 4) {
-				m_pos.y = m_pos_old.y;
-			}
-			t = m->CollisionMap(CVector2D(m_pos_old.x, m_pos.y), m_rect);
-			if (t == 3) {
-				m_pos.x = m_pos_old.x;
-				m_is_ground = true;
-				m_is_ground2 = true;
-			}
-			if (t == 1 || t == 4) {
-				m_pos.y = m_pos_old.y;
-				m_vec.y = 0;
-				m_is_ground = true;
-				m_is_ground2 = true;
-			}*/
-			/*
-			else{
-				m_pos.y = m_pos_old.y;
-				m_vec.y = 0;
-				m_is_ground = true;
-				m_is_ground2 = true;
-			}
-			
-			if (t != 0) {
-				m_pos.y = m_pos_old.y;
-				m_vec.y = 0;
-				m_is_ground = true;
-				m_is_ground2 = true;
-			}
-			*/
 		}
 		break;
 	}

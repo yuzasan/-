@@ -307,7 +307,172 @@ TexAnimData enemy_anim_data[] = {
 	ANIMDATA(enemyExtAttack01End),
 };
 
+static TexAnim bossIdle[] = {
+	{ 0,2 },
+	{ 1,2 },
+	{ 2,2 },
+	{ 3,2 },
+	{ 4,2 },
+	{ 5,2 },
+	{ 6,2 },
+	{ 7,2 },
+	{ 8,2 },
+	{ 9,2 },
+	{ 10,2 },
+	{ 11,2 },
+	{ 12,2 },
+	{ 13,2 },
+	{ 14,2 },
+};
+static TexAnim bossWalk[] = {
+	{ 0,0 },
+};
+static TexAnim bossRun[] = {
+	{ 16,2 },
+	{ 17,2 },
+	{ 18,2 },
+	{ 19,2 },
+	{ 20,2 },
+	{ 21,2 },
+	{ 22,2 },
+	{ 23,2 },
+	{ 24,2 },
+	{ 25,2 },
+	{ 26,2 },
+	{ 27,2 },
+	{ 28,2 },
+	{ 29,2 },
+	{ 30,2 },
+};
+static TexAnim bossJumpUp[] = {
+	{ 0,0 },
+};
+static TexAnim bossJumpDown[] = {
+	{ 0,0 },
+};
 
+static TexAnim bossAttack01[] = {
+	{ 40,4 },
+	{ 41,4 },
+	{ 42,4 },
+	{ 43,8 },
+	{ 44,2 },
+	{ 45,3 },
+	{ 46,3 },
+	{ 47,3 },
+};
+static TexAnim bossAttack01End[] = {
+	{ 48,2 },
+	{ 49,2 },
+	{ 50,2 },
+	{ 51,2 },
+	{ 52,2 },
+};
+static TexAnim bossAttack02[] = {
+	{ 0,0 },
+};
+static TexAnim bossAttack02End[] = {
+	{ 0,0 },
+};
+static TexAnim bossAttack03[] = {
+	{ 0,0 },
+};
+static TexAnim bossAttack03End[] = {
+	{ 0,0 },
+};
+static TexAnim bossDamage[] = {
+	{ 88,2 },
+	{ 89,2 },
+	{ 90,2 },
+	{ 91,2 },
+};
+static TexAnim bossDamageEnd[] = {
+	{ 92,2 },
+	{ 93,2 },
+	{ 94,2 },
+	{ 95,2 },
+};
+static TexAnim bossDeath[] = {
+	{ 96,4 },
+	{ 97,4 },
+	{ 98,8 },
+	{ 99,4 },
+	{ 100,4 },
+	{ 101,4 },
+	{ 102,4 },
+	{ 103,4 },
+};
+
+static TexAnim bossDown[] = {
+	{ 104,4 },
+	{ 105,4 },
+	{ 106,4 },
+	{ 107,4 },
+	{ 108,4 },
+};
+static TexAnim bossDownGround[] = {
+	{ 109,4 },
+	{ 110,4 },
+	{ 111,4 },
+};
+static TexAnim bossWakeup[] = {
+	{ 112,4 },
+	{ 113,4 },
+	{ 114,4 },
+	{ 115,4 },
+	{ 116,4 },
+	{ 117,4 },
+	{ 118,4 },
+};
+static TexAnim bossGuard[] = {
+	{ 0,4 },
+};
+static TexAnim bossGuardEnd[] = {
+	{ 0,4 },
+};
+static TexAnim bossCrash[] = {
+	{ 128,4 },
+	{ 129,4 },
+	{ 130,4 },
+	{ 131,60 },
+};
+static TexAnim bossCrash01End[] = {
+	{ 131,4 },
+	{ 130,4 },
+	{ 129,4 },
+	{ 128,4 },
+};
+static TexAnim bossExt01Attack[] = {
+	{ 0,4 },
+};
+static TexAnim bossExtAttack01End[] = {
+	{ 0,4 },
+};
+TexAnimData boss_anim_data[] = {
+	ANIMDATA(bossIdle),
+	ANIMDATA(bossWalk),
+	ANIMDATA(bossRun),
+	ANIMDATA(bossJumpUp),
+	ANIMDATA(bossJumpDown),
+	ANIMDATA(bossAttack01),
+	ANIMDATA(bossAttack01End),
+	ANIMDATA(bossAttack02),
+	ANIMDATA(bossAttack02End),
+	ANIMDATA(bossAttack03),
+	ANIMDATA(bossAttack03End),
+	ANIMDATA(bossDamage),
+	ANIMDATA(bossDamageEnd),
+	ANIMDATA(bossDeath),
+	ANIMDATA(bossDown),
+	ANIMDATA(bossDownGround),
+	ANIMDATA(bossWakeup),
+	ANIMDATA(bossGuard),
+	ANIMDATA(bossGuardEnd),
+	ANIMDATA(bossCrash),
+	ANIMDATA(bossCrash01End),
+	ANIMDATA(bossExt01Attack),
+	ANIMDATA(bossExtAttack01End),
+};
 
 
 static TexAnim _effect_blood[] = {

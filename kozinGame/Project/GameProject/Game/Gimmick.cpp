@@ -9,11 +9,11 @@ Warp::Warp(int stage, const CRect& rect, const CVector2D& nextplayerpos) :Base(e
 	m_nextplayerpos = nextplayerpos;
 }
 
-Warp::~Warp(){
+Warp::~Warp() {
 
 }
 
-void Warp::Draw(){
+void Warp::Draw() {
 	DrawRect();
 }
 
@@ -23,11 +23,11 @@ Gravity_Up::Gravity_Up(int stage, const CRect& rect) :Base(eType_Gravity_Up) {
 	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
 }
 
-Gravity_Up::~Gravity_Up(){
+Gravity_Up::~Gravity_Up() {
 
 }
 
-void Gravity_Up::Draw(){
+void Gravity_Up::Draw() {
 	DrawRect();
 }
 
@@ -86,15 +86,15 @@ Zoom::Zoom(int stage, const CRect& rect) :Base(eType_Zoom) {
 	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
 }
 
-Zoom::~Zoom(){
+Zoom::~Zoom() {
 
 }
 
-void Zoom::UpDate(){
+void Zoom::UpDate() {
 
 }
 
-void Zoom::Draw(){
+void Zoom::Draw() {
 	//DrawRect();
 }
 
@@ -112,19 +112,19 @@ void Zoom::Collision(Base* b){
 }
 */
 
-Smog::Smog(const CVector2D& pos):Base(eType_Smog){
+Smog::Smog(const CVector2D& pos) :Base(eType_Smog) {
 	m_img = COPY_RESOURCE("Kakusu", CImage);
 	m_pos = pos;
-	m_img.SetSize(64*5, 64*3);
-	m_img.SetCenter(64*2+32, 64+32);
-	m_rect = CRect(-64*3+32, -64-32, 64*3-32, 64+32);
+	m_img.SetSize(64 * 5, 64 * 3);
+	m_img.SetCenter(64 * 2 + 32, 64 + 32);
+	m_rect = CRect(-64 * 3 + 32, -64 - 32, 64 * 3 - 32, 64 + 32);
 }
 
-void Smog::Kill(){
+void Smog::Kill() {
 	m_kill = true;
 }
 
-void Smog::Update(){
+void Smog::Update() {
 	switch (s) {
 	case 1:
 		Kill();
@@ -134,13 +134,13 @@ void Smog::Update(){
 	}
 }
 
-void Smog::Draw(){
+void Smog::Draw() {
 	m_img.SetPos(GetScreenPos(m_pos));
 	m_img.Draw();
 	DrawRect();
 }
 
-void Smog::Collision(Base* b){
+void Smog::Collision(Base* b) {
 	switch (b->m_type) {
 		//ƒAƒCƒeƒ€”»’è
 	case eType_Player:
@@ -155,16 +155,16 @@ void Smog::Collision(Base* b){
 	}
 }
 
-SmogAll::SmogAll(int stage, const CRect& rect):Base(eType_SmogAll){
+SmogAll::SmogAll(int stage, const CRect& rect) :Base(eType_SmogAll) {
 	m_stage = stage;
 	m_pos = CVector2D(rect.m_left, rect.m_top);
 	m_rect = CRect(0, 0, rect.m_right, rect.m_bottom);
 }
 
-SmogAll::~SmogAll(){
+SmogAll::~SmogAll() {
 
 }
 
-void SmogAll::Draw(){
+void SmogAll::Draw() {
 	DrawRect();
 }

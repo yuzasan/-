@@ -32,7 +32,7 @@ private:
 
 	//アイテムフラグ
 	//bool m_item;
-	
+
 	//ズームフラグ
 	bool m_zoom;
 

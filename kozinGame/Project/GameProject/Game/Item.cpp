@@ -42,6 +42,7 @@ void ItemC::Collision(Base* b) {
 		if (Base::CollisionRect(this, b)) {
 			s = 1;
 		}
+		break;
 	}
 }
 
